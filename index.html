@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✨ Python Adventures — A Magical Storybook ✨</title>
-    <meta name="description" content="Learn Python through magical stories! An immersive storybook experience for kids with 5 enchanting chapters.">
+    <meta name="description" content="Learn Python through magical stories! An immersive storybook experience for kids with 10 enchanting chapters.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
     
     <!-- Google Fonts -->
@@ -29,6 +29,11 @@
             --ch3-indigo: #6366f1;
             --ch4-amber: #f59e0b;
             --ch5-cyan: #06b6d4;
+            --ch6-gold: #d97706;
+            --ch7-violet: #7c3aed;
+            --ch8-teal: #0d9488;
+            --ch9-orange: #ea580c;
+            --ch10-rose: #e11d48;
             --success: #10b981;
             --text-primary: #ffffff;
             --text-secondary: rgba(255,255,255,0.8);
@@ -343,8 +348,13 @@
             margin-top: 10px;
         }
 
+        .book-stars {
+            flex-wrap: wrap;
+            max-width: 180px;
+        }
+
         .book-star {
-            font-size: 16px;
+            font-size: 12px;
             opacity: 0.3;
             transition: all 0.5s ease;
         }
@@ -416,6 +426,11 @@
         .avatar-circle[data-ch="3"] { --avatar-color: var(--ch3-indigo); background: rgba(99,102,241,0.15); }
         .avatar-circle[data-ch="4"] { --avatar-color: var(--ch4-amber); background: rgba(245,158,11,0.15); }
         .avatar-circle[data-ch="5"] { --avatar-color: var(--ch5-cyan); background: rgba(6,182,212,0.15); }
+        .avatar-circle[data-ch="6"] { --avatar-color: var(--ch6-gold); background: rgba(217,119,6,0.15); }
+        .avatar-circle[data-ch="7"] { --avatar-color: var(--ch7-violet); background: rgba(124,58,237,0.15); }
+        .avatar-circle[data-ch="8"] { --avatar-color: var(--ch8-teal); background: rgba(13,148,136,0.15); }
+        .avatar-circle[data-ch="9"] { --avatar-color: var(--ch9-orange); background: rgba(234,88,12,0.15); }
+        .avatar-circle[data-ch="10"] { --avatar-color: var(--ch10-rose); background: rgba(225,29,72,0.15); }
 
         .avatar-emoji {
             font-size: clamp(1.4rem, 3vw, 2rem);
@@ -579,6 +594,11 @@
         .ch3-hero::before { background: radial-gradient(ellipse at center, rgba(99,102,241,0.15) 0%, transparent 70%); }
         .ch4-hero::before { background: radial-gradient(ellipse at center, rgba(245,158,11,0.12) 0%, transparent 70%); }
         .ch5-hero::before { background: radial-gradient(ellipse at center, rgba(6,182,212,0.15) 0%, transparent 70%); }
+        .ch6-hero::before { background: radial-gradient(ellipse at center, rgba(217,119,6,0.15) 0%, transparent 70%); }
+        .ch7-hero::before { background: radial-gradient(ellipse at center, rgba(124,58,237,0.15) 0%, transparent 70%); }
+        .ch8-hero::before { background: radial-gradient(ellipse at center, rgba(13,148,136,0.15) 0%, transparent 70%); }
+        .ch9-hero::before { background: radial-gradient(ellipse at center, rgba(234,88,12,0.15) 0%, transparent 70%); }
+        .ch10-hero::before { background: radial-gradient(ellipse at center, rgba(225,29,72,0.15) 0%, transparent 70%); }
 
         .chapter-particles {
             position: absolute;
@@ -625,6 +645,11 @@
         .ch3-color { color: var(--ch3-indigo); }
         .ch4-color { color: var(--ch4-amber); }
         .ch5-color { color: var(--ch5-cyan); }
+        .ch6-color { color: var(--ch6-gold); }
+        .ch7-color { color: var(--ch7-violet); }
+        .ch8-color { color: var(--ch8-teal); }
+        .ch9-color { color: var(--ch9-orange); }
+        .ch10-color { color: var(--ch10-rose); }
 
         /* Infographic Frame */
         .infographic-frame {
@@ -655,6 +680,11 @@
         .ch3-glass { background: rgba(99,102,241,0.1); box-shadow: 0 0 60px rgba(99,102,241,0.15), inset 0 0 60px rgba(99,102,241,0.05); }
         .ch4-glass { background: rgba(245,158,11,0.1); box-shadow: 0 0 60px rgba(245,158,11,0.12), inset 0 0 60px rgba(245,158,11,0.05); }
         .ch5-glass { background: rgba(6,182,212,0.1); box-shadow: 0 0 60px rgba(6,182,212,0.15), inset 0 0 60px rgba(6,182,212,0.05); }
+        .ch6-glass { background: rgba(217,119,6,0.1); box-shadow: 0 0 60px rgba(217,119,6,0.12), inset 0 0 60px rgba(217,119,6,0.05); }
+        .ch7-glass { background: rgba(124,58,237,0.1); box-shadow: 0 0 60px rgba(124,58,237,0.15), inset 0 0 60px rgba(124,58,237,0.05); }
+        .ch8-glass { background: rgba(13,148,136,0.1); box-shadow: 0 0 60px rgba(13,148,136,0.15), inset 0 0 60px rgba(13,148,136,0.05); }
+        .ch9-glass { background: rgba(234,88,12,0.1); box-shadow: 0 0 60px rgba(234,88,12,0.12), inset 0 0 60px rgba(234,88,12,0.05); }
+        .ch10-glass { background: rgba(225,29,72,0.1); box-shadow: 0 0 60px rgba(225,29,72,0.15), inset 0 0 60px rgba(225,29,72,0.05); }
 
         .infographic-img {
             width: 100%;
@@ -1434,6 +1464,11 @@
         .bottom-nav-item[data-ch="3"].active { border-color: var(--ch3-indigo); background: rgba(99,102,241,0.15); }
         .bottom-nav-item[data-ch="4"].active { border-color: var(--ch4-amber); background: rgba(245,158,11,0.15); }
         .bottom-nav-item[data-ch="5"].active { border-color: var(--ch5-cyan); background: rgba(6,182,212,0.15); }
+        .bottom-nav-item[data-ch="6"].active { border-color: var(--ch6-gold); background: rgba(217,119,6,0.15); }
+        .bottom-nav-item[data-ch="7"].active { border-color: var(--ch7-violet); background: rgba(124,58,237,0.15); }
+        .bottom-nav-item[data-ch="8"].active { border-color: var(--ch8-teal); background: rgba(13,148,136,0.15); }
+        .bottom-nav-item[data-ch="9"].active { border-color: var(--ch9-orange); background: rgba(234,88,12,0.15); }
+        .bottom-nav-item[data-ch="10"].active { border-color: var(--ch10-rose); background: rgba(225,29,72,0.15); }
 
         /* ============================================
            LIGHTBOX
@@ -1500,6 +1535,534 @@
         }
 
         /* ============================================
+           INTERACTIVE: Ch6 - Dictionaries (Treasure Map)
+           ============================================ */
+        .treasure-map-container {
+            text-align: center;
+        }
+
+        .treasure-map {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .treasure-spot {
+            width: 130px;
+            height: 140px;
+            background: linear-gradient(135deg, rgba(217,119,6,0.2), rgba(217,119,6,0.05));
+            border: 2px solid rgba(217,119,6,0.3);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .treasure-spot:hover {
+            transform: translateY(-8px) scale(1.05);
+            border-color: var(--ch6-gold);
+            box-shadow: 0 10px 40px rgba(217,119,6,0.2);
+        }
+
+        .treasure-spot .spot-key {
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            color: var(--ch6-gold);
+            margin-bottom: 6px;
+        }
+
+        .treasure-spot .spot-icon {
+            font-size: 2.2rem;
+            margin-bottom: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .treasure-spot .spot-value {
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .treasure-spot.revealed .spot-value {
+            opacity: 1;
+            color: var(--star-gold);
+        }
+
+        .treasure-spot.revealed .spot-icon {
+            transform: scale(1.2);
+        }
+
+        .treasure-add-form {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            align-items: center;
+        }
+
+        .treasure-input {
+            font-family: var(--font-code);
+            font-size: 0.95rem;
+            padding: 10px 16px;
+            border: 2px solid rgba(217,119,6,0.3);
+            background: rgba(217,119,6,0.05);
+            color: var(--text-primary);
+            border-radius: 12px;
+            width: 120px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .treasure-input:focus {
+            border-color: var(--ch6-gold);
+        }
+
+        .treasure-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .treasure-add-btn {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            padding: 10px 24px;
+            border: 2px solid rgba(217,119,6,0.3);
+            background: linear-gradient(135deg, rgba(217,119,6,0.2), rgba(217,119,6,0.05));
+            color: var(--text-primary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .treasure-add-btn:hover {
+            border-color: var(--ch6-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(217,119,6,0.2);
+        }
+
+        .treasure-info {
+            font-family: var(--font-code);
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+
+        /* ============================================
+           INTERACTIVE: Ch7 - Strings (Spell Scroll)
+           ============================================ */
+        .spell-scroll-container {
+            text-align: center;
+        }
+
+        .spell-scroll-input {
+            font-family: var(--font-code);
+            font-size: 1.2rem;
+            padding: 14px 24px;
+            border: 2px solid rgba(124,58,237,0.3);
+            background: rgba(124,58,237,0.08);
+            color: var(--text-primary);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease;
+            margin-bottom: 24px;
+        }
+
+        .spell-scroll-input:focus {
+            border-color: var(--ch7-violet);
+            box-shadow: 0 0 20px rgba(124,58,237,0.15);
+        }
+
+        .spell-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .spell-method-btn {
+            font-family: var(--font-code);
+            font-size: 0.95rem;
+            padding: 10px 20px;
+            border: 2px solid rgba(124,58,237,0.3);
+            background: rgba(124,58,237,0.1);
+            color: var(--text-primary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .spell-method-btn:hover {
+            border-color: var(--ch7-violet);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(124,58,237,0.2);
+        }
+
+        .spell-method-btn.active-spell {
+            border-color: var(--ch7-violet);
+            background: rgba(124,58,237,0.25);
+            box-shadow: 0 0 20px rgba(124,58,237,0.3);
+        }
+
+        .spell-scroll-result {
+            font-family: var(--font-code);
+            font-size: 1.3rem;
+            min-height: 50px;
+            color: var(--ch7-violet);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px;
+            border: 2px dashed rgba(124,58,237,0.2);
+            border-radius: 16px;
+            background: rgba(124,58,237,0.03);
+            margin-top: 16px;
+            word-break: break-all;
+        }
+
+        /* ============================================
+           INTERACTIVE: Ch8 - Input/Output (Crystal Ball)
+           ============================================ */
+        .crystal-ball-container {
+            text-align: center;
+        }
+
+        .crystal-ball-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .crystal-ball-emoji {
+            font-size: 6rem;
+            display: block;
+            filter: drop-shadow(0 0 30px rgba(13,148,136,0.4));
+            animation: crystalFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes crystalFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .crystal-input-area {
+            margin-bottom: 20px;
+        }
+
+        .crystal-prompt {
+            font-family: var(--font-code);
+            font-size: 1rem;
+            color: var(--ch8-teal);
+            margin-bottom: 8px;
+        }
+
+        .crystal-input {
+            font-family: var(--font-code);
+            font-size: 1.1rem;
+            padding: 12px 24px;
+            border: 2px solid rgba(13,148,136,0.3);
+            background: rgba(13,148,136,0.08);
+            color: var(--text-primary);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .crystal-input:focus {
+            border-color: var(--ch8-teal);
+            box-shadow: 0 0 20px rgba(13,148,136,0.15);
+        }
+
+        .crystal-ask-btn {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            padding: 14px 36px;
+            border: 2px solid rgba(13,148,136,0.3);
+            background: linear-gradient(135deg, rgba(13,148,136,0.2), rgba(13,148,136,0.05));
+            color: var(--text-primary);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+        }
+
+        .crystal-ask-btn:hover {
+            border-color: var(--ch8-teal);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(13,148,136,0.3);
+        }
+
+        .crystal-output {
+            margin-top: 24px;
+            padding: 20px;
+            border: 2px solid rgba(13,148,136,0.2);
+            border-radius: 16px;
+            background: rgba(13,148,136,0.05);
+            min-height: 60px;
+        }
+
+        .crystal-output-line {
+            font-family: var(--font-code);
+            font-size: 1.05rem;
+            color: var(--ch8-teal);
+            margin: 4px 0;
+            opacity: 0;
+            animation: crystalReveal 0.5s ease forwards;
+        }
+
+        @keyframes crystalReveal {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================
+           INTERACTIVE: Ch9 - Classes (Pet Factory)
+           ============================================ */
+        .pet-factory-container {
+            text-align: center;
+        }
+
+        .factory-controls {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .factory-select-group {
+            text-align: center;
+        }
+
+        .factory-select-label {
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .factory-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .factory-option {
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            border: 2px solid rgba(234,88,12,0.2);
+            background: rgba(234,88,12,0.05);
+            color: var(--text-primary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .factory-option:hover {
+            border-color: var(--ch9-orange);
+            transform: translateY(-2px);
+        }
+
+        .factory-option.selected {
+            border-color: var(--ch9-orange);
+            background: rgba(234,88,12,0.2);
+            box-shadow: 0 0 15px rgba(234,88,12,0.2);
+        }
+
+        .factory-build-btn {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            padding: 14px 36px;
+            border: 2px solid rgba(234,88,12,0.3);
+            background: linear-gradient(135deg, rgba(234,88,12,0.2), rgba(234,88,12,0.05));
+            color: var(--text-primary);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .factory-build-btn:hover {
+            border-color: var(--ch9-orange);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(234,88,12,0.3);
+        }
+
+        .conveyor-belt {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            min-height: 100px;
+            padding: 20px;
+            border: 2px dashed rgba(234,88,12,0.3);
+            border-radius: 20px;
+            background: rgba(234,88,12,0.03);
+            align-items: center;
+        }
+
+        .pet-card {
+            width: 120px;
+            padding: 16px 12px;
+            border: 2px solid rgba(234,88,12,0.3);
+            border-radius: 16px;
+            background: rgba(234,88,12,0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .pet-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(234,88,12,0.2);
+        }
+
+        .pet-card .pet-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .pet-card .pet-name-label {
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--ch9-orange);
+        }
+
+        .pet-card .pet-sound-label {
+            font-family: var(--font-code);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .pet-speak-result {
+            font-family: var(--font-code);
+            font-size: 1.1rem;
+            color: var(--ch9-orange);
+            margin-top: 16px;
+            min-height: 30px;
+        }
+
+        /* ============================================
+           INTERACTIVE: Ch10 - Try/Except (Safety Net)
+           ============================================ */
+        .safety-net-container {
+            text-align: center;
+        }
+
+        .trick-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .trick-btn {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            padding: 14px 24px;
+            border: 2px solid rgba(225,29,72,0.3);
+            background: rgba(225,29,72,0.1);
+            color: var(--text-primary);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .trick-btn:hover {
+            border-color: var(--ch10-rose);
+            background: rgba(225,29,72,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(225,29,72,0.2);
+        }
+
+        .safety-net-display {
+            position: relative;
+            min-height: 180px;
+            padding: 24px;
+            border: 2px solid rgba(225,29,72,0.2);
+            border-radius: 20px;
+            background: rgba(225,29,72,0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .acrobat-emoji {
+            font-size: 4rem;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .acrobat-emoji.falling {
+            animation: acrobatFall 0.6s ease-in forwards;
+        }
+
+        .acrobat-emoji.caught {
+            animation: acrobatBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes acrobatFall {
+            0% { transform: translateY(0); }
+            60% { transform: translateY(60px); }
+            100% { transform: translateY(40px); }
+        }
+
+        @keyframes acrobatBounce {
+            0% { transform: translateY(40px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        .safety-net-message {
+            font-family: var(--font-code);
+            font-size: 1rem;
+            margin-top: 16px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            max-width: 100%;
+            word-break: break-word;
+        }
+
+        .safety-net-message.error-msg {
+            color: #ef4444;
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.2);
+        }
+
+        .safety-net-message.caught-msg {
+            color: var(--success);
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.2);
+        }
+
+        .safety-net-message.finally-msg {
+            color: var(--star-gold);
+            background: rgba(251,191,36,0.1);
+            border: 1px solid rgba(251,191,36,0.2);
+            margin-top: 8px;
+        }
+
+        /* ============================================
            RESPONSIVE
            ============================================ */
         @media (max-width: 768px) {
@@ -1524,6 +2087,26 @@
                 height: 140px;
             }
 
+            .treasure-spot {
+                width: 110px;
+                height: 120px;
+            }
+
+            .bottom-nav-item {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+
+            .bottom-nav {
+                gap: 4px;
+            }
+
+            .nav-dot {
+                width: 8px;
+                height: 8px;
+            }
+
             .storybook {
                 animation: bookHoverMobile 4s ease-in-out infinite;
             }
@@ -1544,9 +2127,28 @@
             }
 
             .bottom-nav-item {
-                width: 42px;
-                height: 42px;
-                font-size: 1.1rem;
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .bottom-nav {
+                gap: 3px;
+                padding: 8px 8px;
+            }
+
+            .nav-dot {
+                width: 7px;
+                height: 7px;
+            }
+
+            .nav-progress-dots {
+                gap: 4px;
+            }
+
+            .avatar-circle {
+                width: 50px !important;
+                height: 50px !important;
             }
         }
 
@@ -1601,8 +2203,8 @@
     <!-- Badge Notification -->
     <div class="badge-notification" id="badgeNotification">
         <span class="badge-emoji">🏆</span>
-        <div class="badge-title">Python Adventurer!</div>
-        <div class="badge-subtitle">You completed all 5 chapters! Amazing! ✨</div>
+        <div class="badge-title">Python Master!</div>
+        <div class="badge-subtitle">You completed all 10 chapters! You're amazing! ✨🏆</div>
     </div>
 
     <!-- =============================================
@@ -1626,6 +2228,11 @@
                         <span class="book-star" data-ch="3">⭐</span>
                         <span class="book-star" data-ch="4">⭐</span>
                         <span class="book-star" data-ch="5">⭐</span>
+                        <span class="book-star" data-ch="6">⭐</span>
+                        <span class="book-star" data-ch="7">⭐</span>
+                        <span class="book-star" data-ch="8">⭐</span>
+                        <span class="book-star" data-ch="9">⭐</span>
+                        <span class="book-star" data-ch="10">⭐</span>
                     </div>
                 </div>
             </div>
@@ -1657,6 +2264,31 @@
                 <span class="avatar-name">Zara</span>
                 <span class="avatar-star" data-ch="5">⭐</span>
             </div>
+            <div class="avatar-circle" data-ch="6" onclick="goToChapter(6)">
+                <span class="avatar-emoji">🏴‍☠️</span>
+                <span class="avatar-name">Rex</span>
+                <span class="avatar-star" data-ch="6">⭐</span>
+            </div>
+            <div class="avatar-circle" data-ch="7" onclick="goToChapter(7)">
+                <span class="avatar-emoji">📜</span>
+                <span class="avatar-name">Aria</span>
+                <span class="avatar-star" data-ch="7">⭐</span>
+            </div>
+            <div class="avatar-circle" data-ch="8" onclick="goToChapter(8)">
+                <span class="avatar-emoji">🔮</span>
+                <span class="avatar-name">Sage</span>
+                <span class="avatar-star" data-ch="8">⭐</span>
+            </div>
+            <div class="avatar-circle" data-ch="9" onclick="goToChapter(9)">
+                <span class="avatar-emoji">🏭</span>
+                <span class="avatar-name">Leo</span>
+                <span class="avatar-star" data-ch="9">⭐</span>
+            </div>
+            <div class="avatar-circle" data-ch="10" onclick="goToChapter(10)">
+                <span class="avatar-emoji">🎪</span>
+                <span class="avatar-name">Zoe</span>
+                <span class="avatar-star" data-ch="10">⭐</span>
+            </div>
         </div>
 
         <button class="cta-button" id="ctaButton" onclick="startAdventure()">
@@ -1679,6 +2311,11 @@
                 <div class="nav-dot" data-ch="3" onclick="goToChapter(3)"></div>
                 <div class="nav-dot" data-ch="4" onclick="goToChapter(4)"></div>
                 <div class="nav-dot" data-ch="5" onclick="goToChapter(5)"></div>
+                <div class="nav-dot" data-ch="6" onclick="goToChapter(6)"></div>
+                <div class="nav-dot" data-ch="7" onclick="goToChapter(7)"></div>
+                <div class="nav-dot" data-ch="8" onclick="goToChapter(8)"></div>
+                <div class="nav-dot" data-ch="9" onclick="goToChapter(9)"></div>
+                <div class="nav-dot" data-ch="10" onclick="goToChapter(10)"></div>
             </div>
         </nav>
 
@@ -1697,6 +2334,11 @@
             <div class="bottom-nav-item" data-ch="3" onclick="goToChapter(3)">🧙</div>
             <div class="bottom-nav-item" data-ch="4" onclick="goToChapter(4)">👩‍🍳</div>
             <div class="bottom-nav-item" data-ch="5" onclick="goToChapter(5)">🧸</div>
+            <div class="bottom-nav-item" data-ch="6" onclick="goToChapter(6)">🏴‍☠️</div>
+            <div class="bottom-nav-item" data-ch="7" onclick="goToChapter(7)">📜</div>
+            <div class="bottom-nav-item" data-ch="8" onclick="goToChapter(8)">🔮</div>
+            <div class="bottom-nav-item" data-ch="9" onclick="goToChapter(9)">🏭</div>
+            <div class="bottom-nav-item" data-ch="10" onclick="goToChapter(10)">🎪</div>
         </nav>
 
         <!-- ======================== CHAPTER 1: Variables ======================== -->
@@ -1796,9 +2438,9 @@
                 <h3 class="complete-title">Chapter 1 Complete!</h3>
                 <p class="complete-message">You learned about variables — Luna's magic pouches! 🎒</p>
                 <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: 20%"></div>
+                    <div class="progress-bar-fill" style="width: 10%"></div>
                 </div>
-                <p class="progress-text">1 of 5 chapters complete</p>
+                <p class="progress-text">1 of 10 chapters complete</p>
                 <button class="next-chapter-btn" onclick="completeAndNext(1)">Next: The Dragon's Riddle 🐉 →</button>
             </div>
         </div>
@@ -1888,9 +2530,9 @@
                 <h3 class="complete-title">Chapter 2 Complete!</h3>
                 <p class="complete-message">You mastered if/else — the dragon's riddle! 🐉</p>
                 <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: 40%"></div>
+                    <div class="progress-bar-fill" style="width: 20%"></div>
                 </div>
-                <p class="progress-text">2 of 5 chapters complete</p>
+                <p class="progress-text">2 of 10 chapters complete</p>
                 <button class="next-chapter-btn" onclick="completeAndNext(2)">Next: The Wizard's Spell 🧙 →</button>
             </div>
         </div>
@@ -1978,9 +2620,9 @@
                 <h3 class="complete-title">Chapter 3 Complete!</h3>
                 <p class="complete-message">You learned loops — Kai's magical spell! 🧙</p>
                 <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: 60%"></div>
+                    <div class="progress-bar-fill" style="width: 30%"></div>
                 </div>
-                <p class="progress-text">3 of 5 chapters complete</p>
+                <p class="progress-text">3 of 10 chapters complete</p>
                 <button class="next-chapter-btn" onclick="completeAndNext(3)">Next: The Recipe Book 👩‍🍳 →</button>
             </div>
         </div>
@@ -2086,9 +2728,9 @@
                 <h3 class="complete-title">Chapter 4 Complete!</h3>
                 <p class="complete-message">You mastered functions — Maya's recipe book! 👩‍🍳</p>
                 <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: 80%"></div>
+                    <div class="progress-bar-fill" style="width: 40%"></div>
                 </div>
-                <p class="progress-text">4 of 5 chapters complete</p>
+                <p class="progress-text">4 of 10 chapters complete</p>
                 <button class="next-chapter-btn" onclick="completeAndNext(4)">Next: The Toy Box 🧸 →</button>
             </div>
         </div>
@@ -2185,13 +2827,536 @@
 
             <div class="chapter-complete" id="ch5-complete">
                 <div class="complete-star">⭐</div>
+                <h3 class="complete-title">Chapter 5 Complete!</h3>
+                <p class="complete-message">You learned lists — Zara's magical toy box! 🧸</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 50%"></div>
+                </div>
+                <p class="progress-text">5 of 10 chapters complete</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(5)">Next: The Treasure Map 🏴‍☠️ →</button>
+            </div>
+        </div>
+
+        <!-- ======================== CHAPTER 6: Dictionaries ======================== -->
+        <div class="chapter" id="chapter6" data-ch="6">
+            
+            <div class="chapter-hero ch6-hero" id="ch6-hero">
+                <div class="chapter-particles" id="ch6Particles"></div>
+                <span class="chapter-label ch6-color">Chapter 6</span>
+                <h2 class="chapter-title ch6-color">The Treasure Map</h2>
+                <div class="infographic-frame" onclick="openLightbox('images/ch6-dictionaries.jpg')">
+                    <div class="infographic-glass ch6-glass">
+                        <img class="infographic-img" src="images/ch6-dictionaries.jpg" alt="The Treasure Map - Dictionaries Infographic" loading="lazy">
+                    </div>
+                </div>
+                <p class="infographic-hint">🔍 Click to view full screen</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to read the story</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <div class="chapter-story" id="ch6-story">
+                <div class="story-block">
+                    <p class="story-text">
+                        Ahoy! Luna meets <strong>Captain Rex</strong>! 🏴‍☠️ He's a young pirate with an amazing treasure map. 
+                        But this map is special — each <strong>X mark</strong> has a <em>name</em> (a key!) that leads to a specific treasure (a value!). 
+                        In Python, this is called a <strong>dictionary</strong>!
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        A dictionary uses <strong>keys</strong> to find <strong>values</strong> — just like how each X on the map leads to a treasure!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Captain Rex's treasure map!</span>
+<span class="code-function">treasure</span> <span class="code-operator">=</span> {<span class="code-string">'gold'</span>: <span class="code-number">100</span>, <span class="code-string">'gems'</span>: <span class="code-number">50</span>, <span class="code-string">'swords'</span>: <span class="code-number">3</span>}
+<span class="code-builtin">print</span>(<span class="code-function">treasure</span>[<span class="code-string">'gold'</span>])   <span class="code-comment"># 100</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Rex can <strong>add new treasure</strong> to his map anytime! And he can see all his keys, all his values, 
+                        or loop through everything with <strong>.items()</strong>!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Add new treasure!</span>
+<span class="code-function">treasure</span>[<span class="code-string">'rubies'</span>] <span class="code-operator">=</span> <span class="code-number">25</span>
+
+<span class="code-comment"># See all the keys and values</span>
+<span class="code-builtin">print</span>(<span class="code-function">treasure</span>.<span class="code-builtin">keys</span>())    <span class="code-comment"># dict_keys(['gold', 'gems', 'swords', 'rubies'])</span>
+<span class="code-builtin">print</span>(<span class="code-function">treasure</span>.<span class="code-builtin">values</span>())  <span class="code-comment"># dict_values([100, 50, 3, 25])</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        The <strong>golden rule</strong> of maps: <em>No duplicate keys!</em> Each X leads to exactly ONE treasure spot. 
+                        If you use the same key, it <strong>replaces</strong> the old value! And <strong>len()</strong> tells you how many treasures you have.
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Loop through ALL the treasure!</span>
+<span class="code-keyword">for</span> <span class="code-function">key</span>, <span class="code-function">value</span> <span class="code-keyword">in</span> <span class="code-function">treasure</span>.<span class="code-builtin">items</span>():
+    <span class="code-builtin">print</span>(<span class="code-string">f"{key}: {value}"</span>)
+<span class="code-comment"># gold: 100, gems: 50, swords: 3, rubies: 25</span>
+
+<span class="code-builtin">print</span>(<span class="code-builtin">len</span>(<span class="code-function">treasure</span>))  <span class="code-comment"># 4 treasure types!</span></code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapter-interactive" id="ch6-interactive">
+                <h3 class="interactive-title ch6-color">🏴‍☠️ Explore the Treasure Map!</h3>
+                <p class="interactive-subtitle">Click X marks to reveal treasures, then add your own!</p>
+                <div class="treasure-map-container" id="treasureMapContainer">
+                    <div class="treasure-map" id="treasureMap">
+                        <div class="treasure-spot" onclick="revealTreasure(this)" data-key="gold" data-value="100">
+                            <span class="spot-key">'gold'</span>
+                            <span class="spot-icon">❌</span>
+                            <span class="spot-value">100 🪙</span>
+                        </div>
+                        <div class="treasure-spot" onclick="revealTreasure(this)" data-key="gems" data-value="50">
+                            <span class="spot-key">'gems'</span>
+                            <span class="spot-icon">❌</span>
+                            <span class="spot-value">50 💎</span>
+                        </div>
+                        <div class="treasure-spot" onclick="revealTreasure(this)" data-key="swords" data-value="3">
+                            <span class="spot-key">'swords'</span>
+                            <span class="spot-icon">❌</span>
+                            <span class="spot-value">3 ⚔️</span>
+                        </div>
+                    </div>
+                    <div class="treasure-add-form">
+                        <input class="treasure-input" id="treasureKey" type="text" placeholder="key" maxlength="12">
+                        <span style="color: var(--text-muted); font-size: 1.2rem;">:</span>
+                        <input class="treasure-input" id="treasureValue" type="text" placeholder="value" maxlength="12">
+                        <button class="treasure-add-btn" onclick="addTreasure()">➕ Add Treasure</button>
+                    </div>
+                    <div class="treasure-info" id="treasureInfo">len(treasure) = 3</div>
+                </div>
+            </div>
+
+            <div class="chapter-complete" id="ch6-complete">
+                <div class="complete-star">⭐</div>
+                <h3 class="complete-title">Chapter 6 Complete!</h3>
+                <p class="complete-message">You learned dictionaries — Captain Rex's treasure map! 🏴‍☠️</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 60%"></div>
+                </div>
+                <p class="progress-text">6 of 10 chapters complete</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(6)">Next: The Magic Spell Scroll 📜 →</button>
+            </div>
+        </div>
+
+        <!-- ======================== CHAPTER 7: Strings ======================== -->
+        <div class="chapter" id="chapter7" data-ch="7">
+            
+            <div class="chapter-hero ch7-hero" id="ch7-hero">
+                <div class="chapter-particles" id="ch7Particles"></div>
+                <span class="chapter-label ch7-color">Chapter 7</span>
+                <h2 class="chapter-title ch7-color">The Magic Spell Scroll</h2>
+                <div class="infographic-frame" onclick="openLightbox('images/ch7-strings.jpg')">
+                    <div class="infographic-glass ch7-glass">
+                        <img class="infographic-img" src="images/ch7-strings.jpg" alt="The Magic Spell Scroll - Strings Infographic" loading="lazy">
+                    </div>
+                </div>
+                <p class="infographic-hint">🔍 Click to view full screen</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to read the story</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <div class="chapter-story" id="ch7-story">
+                <div class="story-block">
+                    <p class="story-text">
+                        Luna enters a mysterious library and meets <strong>Aria</strong>, a young witch! 📜 
+                        Aria has a magical spell scroll that can <strong>transform words</strong> with special incantations. 
+                        In Python, words are called <strong>strings</strong>, and the spells are <strong>string methods</strong>!
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Aria whispers <strong>.upper()</strong> and the words SHOUT! She whispers <strong>.lower()</strong> and they become quiet. 
+                        These magic methods transform strings instantly!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Aria's spell transformations!</span>
+<span class="code-function">spell</span> <span class="code-operator">=</span> <span class="code-string">"hello world"</span>
+<span class="code-function">spell</span>.<span class="code-builtin">upper</span>()     <span class="code-comment"># "HELLO WORLD" 🔥</span>
+<span class="code-function">spell</span>.<span class="code-builtin">lower</span>()     <span class="code-comment"># "hello world" 🌊</span>
+<span class="code-builtin">len</span>(<span class="code-function">spell</span>)        <span class="code-comment"># 11 characters</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        The most powerful spells can <strong>replace</strong> parts of words and even <strong>split</strong> them into pieces! 
+                        And with <strong>f-strings</strong>, Aria can mix potions — combining variables right inside strings!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Replace and split magic!</span>
+<span class="code-function">spell</span>.<span class="code-builtin">replace</span>(<span class="code-string">'world'</span>, <span class="code-string">'python'</span>)  <span class="code-comment"># "hello python"</span>
+<span class="code-function">spell</span>.<span class="code-builtin">split</span>()                    <span class="code-comment"># ['hello', 'world']</span>
+<span class="code-function">spell</span>[<span class="code-number">0</span>:<span class="code-number">5</span>]                      <span class="code-comment"># "hello" (slicing!)</span>
+
+<span class="code-comment"># Potion mixing (f-strings!)</span>
+<span class="code-function">name</span> <span class="code-operator">=</span> <span class="code-string">"Aria"</span>
+<span class="code-function">greeting</span> <span class="code-operator">=</span> <span class="code-string">f"I am {name}"</span>  <span class="code-comment"># "I am Aria" ✨</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Strings are everywhere in Python! Names, messages, spells — they're all strings. 
+                        And with these magical methods, you can transform them however you want! 🪄
+                    </p>
+                </div>
+            </div>
+
+            <div class="chapter-interactive" id="ch7-interactive">
+                <h3 class="interactive-title ch7-color">📜 Cast String Spells!</h3>
+                <p class="interactive-subtitle">Type a word, then click a spell to transform it!</p>
+                <div class="spell-scroll-container" id="spellScrollContainer">
+                    <input class="spell-scroll-input" id="spellScrollInput" type="text" value="hello world" placeholder="Type your text here...">
+                    <div class="spell-buttons">
+                        <button class="spell-method-btn" onclick="castStringSpell('upper')">.upper() 🔥</button>
+                        <button class="spell-method-btn" onclick="castStringSpell('lower')">.lower() 🌊</button>
+                        <button class="spell-method-btn" onclick="castStringSpell('replace')">.replace() 🔄</button>
+                        <button class="spell-method-btn" onclick="castStringSpell('split')">.split() ✂️</button>
+                        <button class="spell-method-btn" onclick="castStringSpell('len')">len() 📏</button>
+                        <button class="spell-method-btn" onclick="castStringSpell('reverse')">[::-1] 🪞</button>
+                    </div>
+                    <div class="spell-scroll-result" id="spellScrollResult">✨ Cast a spell to see the magic!</div>
+                </div>
+            </div>
+
+            <div class="chapter-complete" id="ch7-complete">
+                <div class="complete-star">⭐</div>
+                <h3 class="complete-title">Chapter 7 Complete!</h3>
+                <p class="complete-message">You mastered strings — Aria's magical spell scroll! 📜</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 70%"></div>
+                </div>
+                <p class="progress-text">7 of 10 chapters complete</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(7)">Next: The Talking Crystal Ball 🔮 →</button>
+            </div>
+        </div>
+
+        <!-- ======================== CHAPTER 8: Input/Output ======================== -->
+        <div class="chapter" id="chapter8" data-ch="8">
+            
+            <div class="chapter-hero ch8-hero" id="ch8-hero">
+                <div class="chapter-particles" id="ch8Particles"></div>
+                <span class="chapter-label ch8-color">Chapter 8</span>
+                <h2 class="chapter-title ch8-color">The Talking Crystal Ball</h2>
+                <div class="infographic-frame" onclick="openLightbox('images/ch8-inputoutput.jpg')">
+                    <div class="infographic-glass ch8-glass">
+                        <img class="infographic-img" src="images/ch8-inputoutput.jpg" alt="The Talking Crystal Ball - Input/Output Infographic" loading="lazy">
+                    </div>
+                </div>
+                <p class="infographic-hint">🔍 Click to view full screen</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to read the story</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <div class="chapter-story" id="ch8-story">
+                <div class="story-block">
+                    <p class="story-text">
+                        In a mystical tent filled with starlight, Luna meets <strong>Sage</strong>, a fortune teller kid! 🔮 
+                        Sage has a magical crystal ball that can <strong>listen</strong> to what you say and <strong>speak</strong> back to you. 
+                        In Python, this is <strong>input()</strong> and <strong>print()</strong>!
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        The crystal ball <strong>listens</strong> with <strong>input()</strong> — it asks a question and waits for your answer. 
+                        Then it <strong>speaks</strong> with <strong>print()</strong> — showing the answer back to you!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># The crystal ball listens and speaks!</span>
+<span class="code-function">name</span> <span class="code-operator">=</span> <span class="code-builtin">input</span>(<span class="code-string">"What is your name? "</span>)  <span class="code-comment"># Ball listens 👂</span>
+<span class="code-builtin">print</span>(<span class="code-string">"Hello "</span> <span class="code-operator">+</span> <span class="code-function">name</span>)               <span class="code-comment"># Ball speaks 👄</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Here's a <strong>secret</strong>: input() always returns a <strong>string</strong>! Even if you type a number, 
+                        it's still text. To use it as a real number, you need <strong>type conversion magic</strong> — <strong>int()</strong> or <strong>float()</strong>!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Type conversion magic!</span>
+<span class="code-function">age</span> <span class="code-operator">=</span> <span class="code-builtin">int</span>(<span class="code-builtin">input</span>(<span class="code-string">"Your age? "</span>))  <span class="code-comment"># "10" → 10</span>
+<span class="code-builtin">print</span>(<span class="code-string">f"You are {age} years old!"</span>)
+
+<span class="code-comment"># ⚠️ WARNING: input() always returns a STRING!</span>
+<span class="code-comment"># Use int() or float() to convert for math!</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        With <strong>f-strings</strong>, Sage can weave variables right into the crystal ball's messages. 
+                        It's like magic — put a variable inside <code>{curly braces}</code> and it appears! ✨
+                    </p>
+                </div>
+            </div>
+
+            <div class="chapter-interactive" id="ch8-interactive">
+                <h3 class="interactive-title ch8-color">🔮 Talk to the Crystal Ball!</h3>
+                <p class="interactive-subtitle">Type your name and age, then ask the crystal ball!</p>
+                <div class="crystal-ball-container" id="crystalBallContainer">
+                    <div class="crystal-ball-wrapper">
+                        <span class="crystal-ball-emoji">🔮</span>
+                    </div>
+                    <div class="crystal-input-area">
+                        <p class="crystal-prompt">name = input("What is your name? ")</p>
+                        <input class="crystal-input" id="crystalName" type="text" placeholder="Type your name...">
+                    </div>
+                    <div class="crystal-input-area" style="margin-top: 12px;">
+                        <p class="crystal-prompt">age = int(input("Your age? "))</p>
+                        <input class="crystal-input" id="crystalAge" type="text" placeholder="Type your age...">
+                    </div>
+                    <button class="crystal-ask-btn" onclick="askCrystalBall()">🔮 Ask the Crystal Ball!</button>
+                    <div class="crystal-output" id="crystalOutput">
+                        <span style="color: var(--text-muted); font-family: var(--font-body);">The crystal ball awaits your questions...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapter-complete" id="ch8-complete">
+                <div class="complete-star">⭐</div>
+                <h3 class="complete-title">Chapter 8 Complete!</h3>
+                <p class="complete-message">You mastered input/output — Sage's crystal ball! 🔮</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 80%"></div>
+                </div>
+                <p class="progress-text">8 of 10 chapters complete</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(8)">Next: The Pet Factory 🏭 →</button>
+            </div>
+        </div>
+
+        <!-- ======================== CHAPTER 9: Classes & Objects ======================== -->
+        <div class="chapter" id="chapter9" data-ch="9">
+            
+            <div class="chapter-hero ch9-hero" id="ch9-hero">
+                <div class="chapter-particles" id="ch9Particles"></div>
+                <span class="chapter-label ch9-color">Chapter 9</span>
+                <h2 class="chapter-title ch9-color">The Pet Factory</h2>
+                <div class="infographic-frame" onclick="openLightbox('images/ch9-classes.jpg')">
+                    <div class="infographic-glass ch9-glass">
+                        <img class="infographic-img" src="images/ch9-classes.jpg" alt="The Pet Factory - Classes & Objects Infographic" loading="lazy">
+                    </div>
+                </div>
+                <p class="infographic-hint">🔍 Click to view full screen</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to read the story</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <div class="chapter-story" id="ch9-story">
+                <div class="story-block">
+                    <p class="story-text">
+                        Luna discovers a magical factory run by <strong>Leo</strong>, a kid inventor! 🏭 
+                        Leo's factory doesn't make toys — it makes <strong>pets</strong>! But first, he needs a <strong>blueprint</strong>. 
+                        In Python, a blueprint is called a <strong>class</strong>, and each pet is an <strong>object</strong>!
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        A <strong>class</strong> is the plan — it says what every pet should have (a name, a sound). 
+                        The <strong>__init__</strong> method is the factory machine — it builds each pet with its own unique features!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Leo's Pet Blueprint (a class!)</span>
+<span class="code-keyword">class</span> <span class="code-function">Pet</span>:
+    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-function">self</span>, <span class="code-function">name</span>, <span class="code-function">sound</span>):
+        <span class="code-function">self</span>.<span class="code-function">name</span> <span class="code-operator">=</span> <span class="code-function">name</span>
+        <span class="code-function">self</span>.<span class="code-function">sound</span> <span class="code-operator">=</span> <span class="code-function">sound</span>
+
+    <span class="code-keyword">def</span> <span class="code-function">speak</span>(<span class="code-function">self</span>):
+        <span class="code-builtin">print</span>(<span class="code-string">f"{self.name} says {self.sound}"</span>)</code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Now Leo can make as many pets as he wants from the same blueprint! Each one is unique — 
+                        different name, different sound — but they all come from the same <strong>class</strong>.
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Create pets from the blueprint!</span>
+<span class="code-function">cat</span> <span class="code-operator">=</span> <span class="code-function">Pet</span>(<span class="code-string">"Whiskers"</span>, <span class="code-string">"Meow!"</span>)
+<span class="code-function">dog</span> <span class="code-operator">=</span> <span class="code-function">Pet</span>(<span class="code-string">"Buddy"</span>, <span class="code-string">"Woof!"</span>)
+
+<span class="code-function">cat</span>.<span class="code-function">speak</span>()  <span class="code-comment"># "Whiskers says Meow!"</span>
+<span class="code-function">dog</span>.<span class="code-function">speak</span>()  <span class="code-comment"># "Buddy says Woof!"</span>
+
+<span class="code-comment"># Blueprint = CLASS (the plan)</span>
+<span class="code-comment"># Real Pet = OBJECT (the thing)</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Think of it like this: The class is the <strong>cookie cutter</strong>, and objects are the <strong>cookies</strong> you make! 
+                        Same shape, but each cookie can have different toppings. That's <strong>object-oriented programming</strong>! 🍪
+                    </p>
+                </div>
+            </div>
+
+            <div class="chapter-interactive" id="ch9-interactive">
+                <h3 class="interactive-title ch9-color">🏭 Build a Pet!</h3>
+                <p class="interactive-subtitle">Pick a name and sound, then create your pet on the conveyor belt!</p>
+                <div class="pet-factory-container" id="petFactoryContainer">
+                    <div class="factory-controls">
+                        <div class="factory-select-group">
+                            <div class="factory-select-label">Choose a Pet Name:</div>
+                            <div class="factory-options" id="petNameOptions">
+                                <button class="factory-option" onclick="selectPetName(this, 'Whiskers', '🐱')">🐱 Whiskers</button>
+                                <button class="factory-option" onclick="selectPetName(this, 'Buddy', '🐶')">🐶 Buddy</button>
+                                <button class="factory-option" onclick="selectPetName(this, 'Tweety', '🐦')">🐦 Tweety</button>
+                                <button class="factory-option" onclick="selectPetName(this, 'Rex', '🦎')">🦎 Rex</button>
+                            </div>
+                        </div>
+                        <div class="factory-select-group">
+                            <div class="factory-select-label">Choose a Sound:</div>
+                            <div class="factory-options" id="petSoundOptions">
+                                <button class="factory-option" onclick="selectPetSound(this, 'Meow!')">Meow!</button>
+                                <button class="factory-option" onclick="selectPetSound(this, 'Woof!')">Woof!</button>
+                                <button class="factory-option" onclick="selectPetSound(this, 'Tweet!')">Tweet!</button>
+                                <button class="factory-option" onclick="selectPetSound(this, 'Roar!')">Roar!</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="factory-build-btn" onclick="buildPet()">⚙️ Build Pet!</button>
+                    <div class="conveyor-belt" id="conveyorBelt">
+                        <span style="color: var(--text-muted); font-family: var(--font-body);">🏭 The conveyor belt is empty — build some pets!</span>
+                    </div>
+                    <div class="pet-speak-result" id="petSpeakResult"></div>
+                </div>
+            </div>
+
+            <div class="chapter-complete" id="ch9-complete">
+                <div class="complete-star">⭐</div>
+                <h3 class="complete-title">Chapter 9 Complete!</h3>
+                <p class="complete-message">You learned classes & objects — Leo's pet factory! 🏭</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 90%"></div>
+                </div>
+                <p class="progress-text">9 of 10 chapters complete</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(9)">Next: The Safety Net 🎪 →</button>
+            </div>
+        </div>
+
+        <!-- ======================== CHAPTER 10: Try/Except ======================== -->
+        <div class="chapter" id="chapter10" data-ch="10">
+            
+            <div class="chapter-hero ch10-hero" id="ch10-hero">
+                <div class="chapter-particles" id="ch10Particles"></div>
+                <span class="chapter-label ch10-color">Chapter 10</span>
+                <h2 class="chapter-title ch10-color">The Safety Net</h2>
+                <div class="infographic-frame" onclick="openLightbox('images/ch10-tryexcept.jpg')">
+                    <div class="infographic-glass ch10-glass">
+                        <img class="infographic-img" src="images/ch10-tryexcept.jpg" alt="The Safety Net - Try/Except Infographic" loading="lazy">
+                    </div>
+                </div>
+                <p class="infographic-hint">🔍 Click to view full screen</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to read the story</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <div class="chapter-story" id="ch10-story">
+                <div class="story-block">
+                    <p class="story-text">
+                        Luna arrives at a spectacular circus! 🎪 Up on the high wire, she meets <strong>Zoe</strong>, a fearless acrobat! 
+                        Zoe does <strong>dangerous tricks</strong> — but she ALWAYS has a <strong>safety net</strong> below her! 
+                        In Python, the safety net is <strong>try/except</strong>!
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        The <strong>try</strong> block is where Zoe does her trick. If something goes wrong, 
+                        <strong>except</strong> catches her — just like the safety net! Without it, the program would CRASH! 💥
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Zoe on the tightrope!</span>
+<span class="code-keyword">try</span>:
+    <span class="code-function">result</span> <span class="code-operator">=</span> <span class="code-number">10</span> <span class="code-operator">/</span> <span class="code-number">0</span>  <span class="code-comment"># Dangerous trick! 😱</span>
+<span class="code-keyword">except</span> <span class="code-function">ZeroDivisionError</span>:
+    <span class="code-builtin">print</span>(<span class="code-string">"Can't divide by zero!"</span>)  <span class="code-comment"># Safety net! 🥅</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Different tricks can go wrong in different ways! A <strong>ValueError</strong> happens when you try to turn letters into numbers. 
+                        An <strong>IndexError</strong> means you went too far in a list. Each error has its own safety net!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Another dangerous trick!</span>
+<span class="code-keyword">try</span>:
+    <span class="code-function">number</span> <span class="code-operator">=</span> <span class="code-builtin">int</span>(<span class="code-string">"hello"</span>)  <span class="code-comment"># Can't convert! 😱</span>
+<span class="code-keyword">except</span> <span class="code-function">ValueError</span>:
+    <span class="code-builtin">print</span>(<span class="code-string">"That's not a number!"</span>)  <span class="code-comment"># Caught! 🥅</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        And here's the grand finale — the <strong>finally</strong> block! It <em>always runs</em>, 
+                        whether the trick succeeds or fails. It's Zoe's bow at the end — she always takes one! 🎀
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># The Bow — finally ALWAYS runs!</span>
+<span class="code-keyword">try</span>:
+    <span class="code-function">risky_trick</span>()
+<span class="code-keyword">except</span> <span class="code-function">Exception</span> <span class="code-keyword">as</span> <span class="code-function">e</span>:
+    <span class="code-builtin">print</span>(<span class="code-string">f"Caught: {e}"</span>)
+<span class="code-keyword">finally</span>:
+    <span class="code-builtin">print</span>(<span class="code-string">"Zoe takes a bow!"</span>)  <span class="code-comment"># Always happens! 🎀</span></code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapter-interactive" id="ch10-interactive">
+                <h3 class="interactive-title ch10-color">🎪 Watch Zoe's Tricks!</h3>
+                <p class="interactive-subtitle">Click a dangerous trick and watch the safety net catch the error!</p>
+                <div class="safety-net-container" id="safetyNetContainer">
+                    <div class="trick-buttons">
+                        <button class="trick-btn" onclick="attemptTrick('zero')">10 / 0 💥</button>
+                        <button class="trick-btn" onclick="attemptTrick('value')">int("hello") 💥</button>
+                        <button class="trick-btn" onclick="attemptTrick('index')">list[99] 💥</button>
+                        <button class="trick-btn" onclick="attemptTrick('safe')">10 / 2 ✨</button>
+                    </div>
+                    <div class="safety-net-display" id="safetyNetDisplay">
+                        <span class="acrobat-emoji" id="acrobatEmoji">🤸</span>
+                        <div id="safetyMessages"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapter-complete" id="ch10-complete">
+                <div class="complete-star">⭐</div>
                 <h3 class="complete-title">🎉 All Chapters Complete! 🎉</h3>
-                <p class="complete-message">You learned lists — Zara's magical toy box! And you completed the entire adventure! 🧸</p>
+                <p class="complete-message">You mastered try/except — Zoe's safety net! And you completed the ENTIRE Python Adventure! 🎪🏆</p>
                 <div class="progress-bar-container">
                     <div class="progress-bar-fill" style="width: 100%"></div>
                 </div>
-                <p class="progress-text">5 of 5 chapters complete — You're a Python Adventurer! 🏆</p>
-                <button class="next-chapter-btn" onclick="completeAndNext(5)">🏠 Back to Home ✨</button>
+                <p class="progress-text">10 of 10 chapters complete — You're a Python Master! 🏆</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(10)">🏠 Back to Home ✨</button>
             </div>
         </div>
 
@@ -2211,22 +3376,43 @@
     let toyList = [];
     let isInChapters = false;
 
+    const TOTAL_CHAPTERS = 10;
+
     const chapterNames = {
         1: 'The Magic Backpack',
         2: "The Dragon's Riddle",
         3: "The Wizard's Spell",
         4: 'The Recipe Book',
-        5: 'The Magical Toy Box'
+        5: 'The Magical Toy Box',
+        6: 'The Treasure Map',
+        7: 'The Magic Spell Scroll',
+        8: 'The Talking Crystal Ball',
+        9: 'The Pet Factory',
+        10: 'The Safety Net'
     };
 
-    const chapterEmojis = ['🎒', '🐉', '🧙', '👩‍🍳', '🧸'];
+    const chapterEmojis = ['🎒', '🐉', '🧙', '👩‍🍳', '🧸', '🏴‍☠️', '📜', '🔮', '🏭', '🎪'];
     const chapterParticleEmojis = {
         1: ['⭐', '✨', '🌟', '💫'],
         2: ['💎', '🔮', '✨', '💜'],
         3: ['⭐', '🌙', '✨', '💫'],
         4: ['🫧', '✨', '🔥', '💛'],
-        5: ['⭐', '💙', '🌙', '✨']
+        5: ['⭐', '💙', '🌙', '✨'],
+        6: ['🪙', '💰', '💎', '⚔️'],
+        7: ['📜', '✨', '🔮', '💜'],
+        8: ['🔮', '✨', '⭐', '🌙'],
+        9: ['⚙️', '🔧', '✨', '🏭'],
+        10: ['🎪', '🎪', '✨', '⭐']
     };
+
+    // Chapter 6 state
+    let treasureCount = 3;
+
+    // Chapter 9 state
+    let selectedPetName = null;
+    let selectedPetIcon = '';
+    let selectedPetSound = null;
+    let createdPets = [];
 
     // ============================================
     // STARRY SKY CANVAS
@@ -2386,7 +3572,7 @@
 
     function updateProgressUI() {
         // Book stars
-        for (let i = 1; i <= 5; i++) {
+        for (let i = 1; i <= TOTAL_CHAPTERS; i++) {
             const star = document.querySelector(`.book-star[data-ch="${i}"]`);
             const avatarStar = document.querySelector(`.avatar-star[data-ch="${i}"]`);
             if (progress[i]) {
@@ -2412,7 +3598,8 @@
     // NAVIGATION
     // ============================================
     function startAdventure() {
-        const firstIncomplete = [1,2,3,4,5].find(ch => !progress[ch]) || 1;
+        const allChs = Array.from({length: TOTAL_CHAPTERS}, (_, i) => i + 1);
+        const firstIncomplete = allChs.find(ch => !progress[ch]) || 1;
         goToChapter(firstIncomplete);
     }
 
@@ -2462,7 +3649,8 @@
         updateProgressUI();
 
         // Check if all complete
-        const allComplete = [1,2,3,4,5].every(ch => progress[ch]);
+        const allChs = Array.from({length: TOTAL_CHAPTERS}, (_, i) => i + 1);
+        const allComplete = allChs.every(ch => progress[ch]);
         if (allComplete) {
             setTimeout(showBadge, 800);
         }
@@ -2472,10 +3660,10 @@
         markComplete(ch);
         launchConfetti();
 
-        if (ch < 5) {
+        if (ch < TOTAL_CHAPTERS) {
             setTimeout(() => goToChapter(ch + 1), 1200);
         } else {
-            markComplete(5);
+            markComplete(TOTAL_CHAPTERS);
             setTimeout(() => {
                 goHome();
             }, 1500);
@@ -2485,7 +3673,7 @@
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (!isInChapters) return;
-        if (e.key === 'ArrowRight' && currentChapter < 5) {
+        if (e.key === 'ArrowRight' && currentChapter < TOTAL_CHAPTERS) {
             goToChapter(currentChapter + 1);
         } else if (e.key === 'ArrowLeft' && currentChapter > 1) {
             goToChapter(currentChapter - 1);
@@ -2504,7 +3692,7 @@
         if (!isInChapters) return;
         const diff = touchStartX - e.changedTouches[0].screenX;
         if (Math.abs(diff) > 80) {
-            if (diff > 0 && currentChapter < 5) goToChapter(currentChapter + 1);
+            if (diff > 0 && currentChapter < TOTAL_CHAPTERS) goToChapter(currentChapter + 1);
             if (diff < 0 && currentChapter > 1) goToChapter(currentChapter - 1);
         }
     }, { passive: true });
@@ -2735,6 +3923,322 @@
 
         if (toyList.length >= 4) {
             setTimeout(() => miniCelebrate(), 300);
+        }
+    }
+
+    // ============================================
+    // INTERACTIVE: Ch6 - Dictionaries (Treasure Map)
+    // ============================================
+    function revealTreasure(el) {
+        if (el.classList.contains('revealed')) return;
+        el.classList.add('revealed');
+        const icon = el.querySelector('.spot-icon');
+        icon.textContent = '🏆';
+        gsap.fromTo(el, { scale: 0.9 }, { scale: 1, duration: 0.4, ease: 'back.out(1.7)' });
+        
+        const allRevealed = document.querySelectorAll('.treasure-spot.revealed').length;
+        if (allRevealed >= treasureCount) {
+            setTimeout(() => miniCelebrate(), 500);
+        }
+    }
+
+    function addTreasure() {
+        const keyInput = document.getElementById('treasureKey');
+        const valueInput = document.getElementById('treasureValue');
+        const key = keyInput.value.trim();
+        const value = valueInput.value.trim();
+        
+        if (!key || !value) return;
+        
+        const map = document.getElementById('treasureMap');
+        const existing = map.querySelector(`[data-key="${key}"]`);
+        if (existing) {
+            // Replace existing value — no duplicate keys!
+            existing.querySelector('.spot-value').textContent = value + ' ✨';
+            existing.classList.add('revealed');
+            gsap.fromTo(existing, { scale: 0.8, borderColor: '#ef4444' }, { scale: 1, borderColor: 'rgba(217,119,6,0.3)', duration: 0.5 });
+        } else {
+            treasureCount++;
+            const spot = document.createElement('div');
+            spot.className = 'treasure-spot revealed';
+            spot.setAttribute('data-key', key);
+            spot.setAttribute('data-value', value);
+            spot.onclick = function() { revealTreasure(this); };
+            spot.innerHTML = `
+                <span class="spot-key">'${key}'</span>
+                <span class="spot-icon">🏆</span>
+                <span class="spot-value">${value} ✨</span>
+            `;
+            map.appendChild(spot);
+            gsap.fromTo(spot, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.7)' });
+        }
+        
+        document.getElementById('treasureInfo').textContent = `len(treasure) = ${treasureCount}`;
+        keyInput.value = '';
+        valueInput.value = '';
+        miniCelebrate();
+    }
+
+    // ============================================
+    // INTERACTIVE: Ch7 - Strings (Spell Scroll)
+    // ============================================
+    function castStringSpell(method) {
+        const input = document.getElementById('spellScrollInput');
+        const result = document.getElementById('spellScrollResult');
+        const text = input.value;
+        
+        if (!text) {
+            result.textContent = '✏️ Type something first!';
+            return;
+        }
+
+        // Highlight active button
+        document.querySelectorAll('.spell-method-btn').forEach(b => b.classList.remove('active-spell'));
+        event.target.classList.add('active-spell');
+        
+        let output = '';
+        switch(method) {
+            case 'upper':
+                output = `"${text.toUpperCase()}" 🔥`;
+                break;
+            case 'lower':
+                output = `"${text.toLowerCase()}" 🌊`;
+                break;
+            case 'replace':
+                const words = text.split(' ');
+                if (words.length > 1) {
+                    const replaced = text.replace(words[words.length - 1], 'python');
+                    output = `"${replaced}" 🔄`;
+                } else {
+                    output = `"${text.replace(text, 'python')}" 🔄`;
+                }
+                break;
+            case 'split':
+                const parts = text.split(' ');
+                output = `[${parts.map(p => `'${p}'`).join(', ')}] ✂️`;
+                break;
+            case 'len':
+                output = `${text.length} characters 📏`;
+                break;
+            case 'reverse':
+                output = `"${text.split('').reverse().join('')}" 🪞`;
+                break;
+        }
+        
+        result.textContent = output;
+        gsap.fromTo(result, { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.7)' });
+        miniCelebrate();
+    }
+
+    // ============================================
+    // INTERACTIVE: Ch8 - Input/Output (Crystal Ball)
+    // ============================================
+    function askCrystalBall() {
+        const name = document.getElementById('crystalName').value.trim();
+        const ageStr = document.getElementById('crystalAge').value.trim();
+        const output = document.getElementById('crystalOutput');
+        
+        if (!name && !ageStr) {
+            output.innerHTML = '<span style="color: var(--text-muted);">✏️ Type your name and age first!</span>';
+            return;
+        }
+
+        output.innerHTML = '';
+        let delay = 0;
+        
+        const addLine = (text, extraDelay) => {
+            delay += extraDelay || 400;
+            setTimeout(() => {
+                const line = document.createElement('div');
+                line.className = 'crystal-output-line';
+                line.textContent = text;
+                output.appendChild(line);
+            }, delay);
+        };
+
+        if (name) {
+            addLine(`>>> name = "${name}"`, 200);
+            addLine(`>>> print("Hello " + name)`, 400);
+            addLine(`Hello ${name}`, 400);
+        }
+
+        if (ageStr) {
+            const age = parseInt(ageStr);
+            if (isNaN(age)) {
+                addLine(`>>> age = int("${ageStr}")`, 400);
+                addLine(`⚠️ ValueError: "${ageStr}" is not a number!`, 400);
+            } else {
+                addLine(`>>> age = int("${ageStr}")  # "${ageStr}" → ${age}`, 400);
+                addLine(`>>> print(f"You are {age} years old!")`, 400);
+                addLine(`You are ${age} years old!`, 400);
+                if (age < 10) {
+                    addLine(`🔮 The ball says: "A young adventurer!"`, 400);
+                } else if (age <= 15) {
+                    addLine(`🔮 The ball says: "A brave explorer!"`, 400);
+                } else {
+                    addLine(`🔮 The ball says: "A wise wizard!"`, 400);
+                }
+            }
+        }
+
+        setTimeout(() => miniCelebrate(), delay + 500);
+    }
+
+    // ============================================
+    // INTERACTIVE: Ch9 - Classes (Pet Factory)
+    // ============================================
+    function selectPetName(el, name, icon) {
+        document.querySelectorAll('#petNameOptions .factory-option').forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedPetName = name;
+        selectedPetIcon = icon;
+        gsap.fromTo(el, { scale: 0.9 }, { scale: 1, duration: 0.3, ease: 'back.out(1.7)' });
+    }
+
+    function selectPetSound(el, sound) {
+        document.querySelectorAll('#petSoundOptions .factory-option').forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedPetSound = sound;
+        gsap.fromTo(el, { scale: 0.9 }, { scale: 1, duration: 0.3, ease: 'back.out(1.7)' });
+    }
+
+    function buildPet() {
+        if (!selectedPetName || !selectedPetSound) {
+            document.getElementById('petSpeakResult').textContent = '☝️ Pick a name AND a sound first!';
+            return;
+        }
+
+        if (createdPets.length >= 6) {
+            document.getElementById('petSpeakResult').textContent = '🏭 Conveyor belt is full!';
+            return;
+        }
+
+        const pet = { name: selectedPetName, icon: selectedPetIcon, sound: selectedPetSound };
+        createdPets.push(pet);
+        updateConveyorBelt();
+        document.getElementById('petSpeakResult').textContent = `✨ Created Pet("${pet.name}", "${pet.sound}")!`;
+        miniCelebrate();
+    }
+
+    function updateConveyorBelt() {
+        const belt = document.getElementById('conveyorBelt');
+        if (createdPets.length === 0) {
+            belt.innerHTML = '<span style="color: var(--text-muted); font-family: var(--font-body);">🏭 The conveyor belt is empty — build some pets!</span>';
+            return;
+        }
+        belt.innerHTML = createdPets.map((pet, i) => `
+            <div class="pet-card" onclick="speakPet(${i})">
+                <span class="pet-icon">${pet.icon}</span>
+                <span class="pet-name-label">${pet.name}</span>
+                <span class="pet-sound-label">"${pet.sound}"</span>
+            </div>
+        `).join('');
+        
+        const lastCard = belt.lastElementChild;
+        if (lastCard) {
+            gsap.fromTo(lastCard, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.7)' });
+        }
+    }
+
+    function speakPet(index) {
+        const pet = createdPets[index];
+        document.getElementById('petSpeakResult').textContent = `🗣️ ${pet.name} says ${pet.sound}`;
+        const card = document.querySelectorAll('.pet-card')[index];
+        gsap.fromTo(card, { scale: 0.9 }, { scale: 1, duration: 0.3, ease: 'back.out(1.7)' });
+    }
+
+    // ============================================
+    // INTERACTIVE: Ch10 - Try/Except (Safety Net)
+    // ============================================
+    function attemptTrick(type) {
+        const acrobat = document.getElementById('acrobatEmoji');
+        const messages = document.getElementById('safetyMessages');
+        
+        // Reset
+        acrobat.className = 'acrobat-emoji';
+        messages.innerHTML = '';
+        acrobat.textContent = '🤸';
+        
+        let tryCode = '';
+        let errorType = '';
+        let errorMsg = '';
+        let isSafe = false;
+
+        switch(type) {
+            case 'zero':
+                tryCode = 'result = 10 / 0';
+                errorType = 'ZeroDivisionError';
+                errorMsg = "Can't divide by zero!";
+                break;
+            case 'value':
+                tryCode = 'number = int("hello")';
+                errorType = 'ValueError';
+                errorMsg = "That's not a number!";
+                break;
+            case 'index':
+                tryCode = 'items = [1,2,3]; items[99]';
+                errorType = 'IndexError';
+                errorMsg = "List index out of range!";
+                break;
+            case 'safe':
+                tryCode = 'result = 10 / 2';
+                isSafe = true;
+                break;
+        }
+
+        // Show try phase
+        setTimeout(() => {
+            const tryMsg = document.createElement('div');
+            tryMsg.className = 'safety-net-message error-msg';
+            tryMsg.textContent = `try: ${tryCode}`;
+            messages.appendChild(tryMsg);
+        }, 200);
+
+        if (!isSafe) {
+            // Fall animation
+            setTimeout(() => {
+                acrobat.classList.add('falling');
+                acrobat.textContent = '😱';
+            }, 600);
+
+            // Caught by safety net
+            setTimeout(() => {
+                acrobat.classList.remove('falling');
+                acrobat.classList.add('caught');
+                acrobat.textContent = '😅';
+                
+                const catchMsg = document.createElement('div');
+                catchMsg.className = 'safety-net-message caught-msg';
+                catchMsg.textContent = `except ${errorType}: "${errorMsg}" 🥅`;
+                messages.appendChild(catchMsg);
+            }, 1200);
+
+            // Finally bow
+            setTimeout(() => {
+                acrobat.textContent = '🤸';
+                const finallyMsg = document.createElement('div');
+                finallyMsg.className = 'safety-net-message finally-msg';
+                finallyMsg.textContent = `finally: "Zoe takes a bow!" 🎀`;
+                messages.appendChild(finallyMsg);
+                miniCelebrate();
+            }, 2000);
+        } else {
+            // Safe trick!
+            setTimeout(() => {
+                acrobat.textContent = '🤩';
+                const safeMsg = document.createElement('div');
+                safeMsg.className = 'safety-net-message caught-msg';
+                safeMsg.textContent = `✨ result = 5.0 — No error! Trick succeeded!`;
+                messages.appendChild(safeMsg);
+            }, 600);
+
+            setTimeout(() => {
+                const finallyMsg = document.createElement('div');
+                finallyMsg.className = 'safety-net-message finally-msg';
+                finallyMsg.textContent = `finally: "Zoe takes a bow!" 🎀`;
+                messages.appendChild(finallyMsg);
+                miniCelebrate();
+            }, 1200);
         }
     }
 
