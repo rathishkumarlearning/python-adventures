@@ -1,0 +1,2889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Python Adventures — A Magical Storybook ✨</title>
+    <meta name="description" content="Learn Python through magical stories! An immersive storybook experience for kids with 5 enchanting chapters.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* ============================================
+           CSS CUSTOM PROPERTIES & RESET
+           ============================================ */
+        :root {
+            --bg-deep: #0a0a2e;
+            --bg-dark: #050520;
+            --star-gold: #fbbf24;
+            --ch1-blue: #3b82f6;
+            --ch2-purple: #8b5cf6;
+            --ch3-indigo: #6366f1;
+            --ch4-amber: #f59e0b;
+            --ch5-cyan: #06b6d4;
+            --success: #10b981;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255,255,255,0.8);
+            --text-muted: rgba(255,255,255,0.5);
+            --glass-bg: rgba(15,15,40,0.6);
+            --glass-border: rgba(255,255,255,0.1);
+            --glass-glow: rgba(255,255,255,0.05);
+            --font-heading: 'Fredoka', sans-serif;
+            --font-body: 'Nunito', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.2) transparent;
+        }
+
+        html::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        html::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        html::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ============================================
+           CANVAS BACKGROUND (Starry Sky)
+           ============================================ */
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ============================================
+           LOADING SCREEN
+           ============================================ */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-deep);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-book {
+            width: 80px;
+            height: 60px;
+            position: relative;
+            animation: bookFloat 2s ease-in-out infinite;
+        }
+
+        .loading-book::before {
+            content: '📖';
+            font-size: 60px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .loading-text {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--star-gold);
+            margin-top: 20px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .loading-sparkles {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .loading-sparkle {
+            width: 8px;
+            height: 8px;
+            background: var(--star-gold);
+            border-radius: 50%;
+            animation: sparkleLoad 1.2s ease-in-out infinite;
+        }
+
+        .loading-sparkle:nth-child(2) { animation-delay: 0.2s; }
+        .loading-sparkle:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bookFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes sparkleLoad {
+            0%, 100% { transform: scale(0.5); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* ============================================
+           LANDING PAGE
+           ============================================ */
+        .landing {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Floating magical particles */
+        .magic-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(1);
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Title */
+        .landing-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24, #fde68a, #fbbf24);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmerText 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(251,191,36,0.4));
+        }
+
+        @keyframes shimmerText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .landing-subtitle {
+            font-family: var(--font-body);
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        /* 3D Storybook */
+        .storybook-container {
+            perspective: 1200px;
+            margin-bottom: 50px;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .storybook {
+            width: clamp(200px, 40vw, 320px);
+            height: clamp(160px, 32vw, 260px);
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(-8deg) rotateX(5deg);
+            animation: bookHover 4s ease-in-out infinite;
+            transition: transform 0.5s ease;
+        }
+
+        .storybook:hover {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+        }
+
+        @keyframes bookHover {
+            0%, 100% { transform: rotateY(-8deg) rotateX(5deg) translateY(0); }
+            50% { transform: rotateY(-5deg) rotateX(3deg) translateY(-15px); }
+        }
+
+        .book-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1e1b4b, #312e81, #3730a3);
+            border-radius: 8px 16px 16px 8px;
+            border: 3px solid rgba(251,191,36,0.4);
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.5),
+                inset 0 0 40px rgba(251,191,36,0.1),
+                0 0 40px rgba(99,102,241,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backface-visibility: hidden;
+        }
+
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10%;
+            bottom: 10%;
+            width: 4px;
+            background: linear-gradient(to bottom, transparent, rgba(251,191,36,0.3), transparent);
+            border-radius: 2px;
+        }
+
+        .book-spine {
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(135deg, #1e1b4b, #252262);
+            transform: rotateY(-90deg);
+            transform-origin: right;
+            border-radius: 8px 0 0 8px;
+            border: 2px solid rgba(251,191,36,0.2);
+        }
+
+        .book-emoji {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 20px rgba(251,191,36,0.6));
+        }
+
+        .book-title-text {
+            font-family: var(--font-heading);
+            font-size: clamp(0.9rem, 2vw, 1.3rem);
+            color: var(--star-gold);
+            text-align: center;
+            text-shadow: 0 0 20px rgba(251,191,36,0.5);
+        }
+
+        .book-stars {
+            display: flex;
+            gap: 4px;
+            margin-top: 10px;
+        }
+
+        .book-star {
+            font-size: 16px;
+            opacity: 0.3;
+            transition: all 0.5s ease;
+        }
+
+        .book-star.earned {
+            opacity: 1;
+            filter: drop-shadow(0 0 6px rgba(251,191,36,0.8));
+            animation: starPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Character Avatars */
+        .chapter-avatars {
+            display: flex;
+            gap: clamp(12px, 3vw, 24px);
+            margin-bottom: 40px;
+            z-index: 2;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .avatar-circle {
+            width: clamp(56px, 10vw, 80px);
+            height: clamp(56px, 10vw, 80px);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            border: 3px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .avatar-circle::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent, var(--avatar-color), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .avatar-circle:hover::after {
+            opacity: 0.6;
+        }
+
+        .avatar-circle:hover {
+            transform: translateY(-8px) scale(1.1);
+            border-color: var(--avatar-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px color-mix(in srgb, var(--avatar-color) 30%, transparent);
+        }
+
+        .avatar-circle[data-ch="1"] { --avatar-color: var(--ch1-blue); background: rgba(59,130,246,0.15); }
+        .avatar-circle[data-ch="2"] { --avatar-color: var(--ch2-purple); background: rgba(139,92,246,0.15); }
+        .avatar-circle[data-ch="3"] { --avatar-color: var(--ch3-indigo); background: rgba(99,102,241,0.15); }
+        .avatar-circle[data-ch="4"] { --avatar-color: var(--ch4-amber); background: rgba(245,158,11,0.15); }
+        .avatar-circle[data-ch="5"] { --avatar-color: var(--ch5-cyan); background: rgba(6,182,212,0.15); }
+
+        .avatar-emoji {
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            line-height: 1;
+        }
+
+        .avatar-name {
+            font-family: var(--font-heading);
+            font-size: clamp(0.5rem, 1.2vw, 0.65rem);
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .avatar-star {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            font-size: 16px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .avatar-star.earned {
+            opacity: 1;
+            animation: starPulse 2s ease-in-out infinite;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            font-family: var(--font-heading);
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-weight: 600;
+            padding: 16px 48px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            color: var(--bg-deep);
+            background: linear-gradient(135deg, var(--star-gold), #f59e0b, var(--star-gold));
+            background-size: 200% 200%;
+            animation: shimmerBtn 3s ease-in-out infinite;
+            box-shadow: 0 8px 30px rgba(251,191,36,0.3), 0 0 60px rgba(251,191,36,0.1);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(251,191,36,0.4), 0 0 80px rgba(251,191,36,0.2);
+        }
+
+        .cta-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        @keyframes shimmerBtn {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmerSlide 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmerSlide {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+
+        /* Badge notification */
+        .badge-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 9999;
+            background: linear-gradient(135deg, rgba(15,15,40,0.95), rgba(30,30,60,0.95));
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--star-gold);
+            border-radius: 24px;
+            padding: 40px 60px;
+            text-align: center;
+            box-shadow: 0 0 100px rgba(251,191,36,0.3);
+            pointer-events: none;
+        }
+
+        .badge-notification.show {
+            pointer-events: auto;
+        }
+
+        .badge-emoji {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .badge-title {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--star-gold);
+            margin-bottom: 8px;
+        }
+
+        .badge-subtitle {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        /* ============================================
+           CHAPTER PAGES
+           ============================================ */
+        .chapters-container {
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chapters-container.active {
+            display: block;
+        }
+
+        .chapter {
+            display: none;
+        }
+
+        .chapter.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .chapter-hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .ch1-hero::before { background: radial-gradient(ellipse at center, rgba(59,130,246,0.15) 0%, transparent 70%); }
+        .ch2-hero::before { background: radial-gradient(ellipse at center, rgba(139,92,246,0.15) 0%, transparent 70%); }
+        .ch3-hero::before { background: radial-gradient(ellipse at center, rgba(99,102,241,0.15) 0%, transparent 70%); }
+        .ch4-hero::before { background: radial-gradient(ellipse at center, rgba(245,158,11,0.12) 0%, transparent 70%); }
+        .ch5-hero::before { background: radial-gradient(ellipse at center, rgba(6,182,212,0.15) 0%, transparent 70%); }
+
+        .chapter-particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .ch-particle {
+            position: absolute;
+            animation: floatParticle linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) translateX(50px) rotate(360deg); opacity: 0; }
+        }
+
+        .chapter-label {
+            font-family: var(--font-heading);
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            opacity: 0.7;
+            z-index: 2;
+        }
+
+        .chapter-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            z-index: 2;
+            text-shadow: 0 0 40px currentColor;
+        }
+
+        .ch1-color { color: var(--ch1-blue); }
+        .ch2-color { color: var(--ch2-purple); }
+        .ch3-color { color: var(--ch3-indigo); }
+        .ch4-color { color: var(--ch4-amber); }
+        .ch5-color { color: var(--ch5-cyan); }
+
+        /* Infographic Frame */
+        .infographic-frame {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            width: 90%;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .infographic-frame:hover {
+            transform: scale(1.02);
+        }
+
+        .infographic-glass {
+            padding: 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .ch1-glass { background: rgba(59,130,246,0.1); box-shadow: 0 0 60px rgba(59,130,246,0.15), inset 0 0 60px rgba(59,130,246,0.05); }
+        .ch2-glass { background: rgba(139,92,246,0.1); box-shadow: 0 0 60px rgba(139,92,246,0.15), inset 0 0 60px rgba(139,92,246,0.05); }
+        .ch3-glass { background: rgba(99,102,241,0.1); box-shadow: 0 0 60px rgba(99,102,241,0.15), inset 0 0 60px rgba(99,102,241,0.05); }
+        .ch4-glass { background: rgba(245,158,11,0.1); box-shadow: 0 0 60px rgba(245,158,11,0.12), inset 0 0 60px rgba(245,158,11,0.05); }
+        .ch5-glass { background: rgba(6,182,212,0.1); box-shadow: 0 0 60px rgba(6,182,212,0.15), inset 0 0 60px rgba(6,182,212,0.05); }
+
+        .infographic-img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .infographic-hint {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 12px;
+            font-family: var(--font-body);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: bounceDown 2s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.8rem;
+            font-family: var(--font-body);
+            color: var(--text-muted);
+        }
+
+        .scroll-arrow {
+            width: 24px;
+            height: 24px;
+            border-right: 2px solid var(--text-muted);
+            border-bottom: 2px solid var(--text-muted);
+            transform: rotate(45deg);
+        }
+
+        @keyframes bounceDown {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Story Section */
+        .chapter-story {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 24px;
+            position: relative;
+        }
+
+        .story-block {
+            margin-bottom: 48px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .story-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .story-text {
+            font-family: var(--font-body);
+            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .story-text strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Code Blocks - Magic Scroll Style */
+        .code-scroll {
+            background: linear-gradient(135deg, rgba(15,15,40,0.8), rgba(25,25,50,0.9));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin: 24px 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .code-scroll::before {
+            content: '✨ Python Magic';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 6px 16px;
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            color: var(--star-gold);
+            background: rgba(251,191,36,0.08);
+            border-bottom: 1px solid rgba(251,191,36,0.1);
+        }
+
+        .code-scroll code {
+            font-family: var(--font-code);
+            font-size: clamp(0.9rem, 2vw, 1.05rem);
+            line-height: 1.7;
+            display: block;
+            margin-top: 28px;
+            color: #e2e8f0;
+        }
+
+        .code-keyword { color: #c084fc; font-weight: 600; }
+        .code-string { color: #86efac; }
+        .code-function { color: #93c5fd; }
+        .code-number { color: #fbbf24; }
+        .code-comment { color: rgba(255,255,255,0.35); font-style: italic; }
+        .code-operator { color: #f472b6; }
+        .code-builtin { color: #67e8f9; }
+
+        /* Interactive Section */
+        .chapter-interactive {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+        }
+
+        .interactive-title {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .interactive-subtitle {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        /* Interactive: Variables (Ch1) */
+        .pouch-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pouch {
+            width: 150px;
+            height: 170px;
+            background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(59,130,246,0.05));
+            border: 2px solid rgba(59,130,246,0.3);
+            border-radius: 20px 20px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .pouch:hover {
+            transform: translateY(-8px) scale(1.05);
+            border-color: var(--ch1-blue);
+            box-shadow: 0 10px 40px rgba(59,130,246,0.2);
+        }
+
+        .pouch:active {
+            transform: scale(0.95);
+        }
+
+        .pouch-label {
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            color: var(--ch1-blue);
+            margin-bottom: 8px;
+        }
+
+        .pouch-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .pouch:hover .pouch-emoji {
+            transform: scale(1.2);
+        }
+
+        .pouch-value {
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .pouch.revealed .pouch-value {
+            opacity: 1;
+            color: var(--star-gold);
+        }
+
+        /* Interactive: If/Else (Ch2) */
+        .riddle-container {
+            text-align: center;
+        }
+
+        .riddle-question {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            color: var(--ch2-purple);
+        }
+
+        .riddle-options {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .riddle-btn {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            padding: 14px 32px;
+            border: 2px solid rgba(139,92,246,0.3);
+            background: rgba(139,92,246,0.1);
+            color: var(--text-primary);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .riddle-btn:hover {
+            border-color: var(--ch2-purple);
+            background: rgba(139,92,246,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139,92,246,0.2);
+        }
+
+        .riddle-btn.correct {
+            border-color: var(--success);
+            background: rgba(16,185,129,0.2);
+            box-shadow: 0 0 30px rgba(16,185,129,0.3);
+        }
+
+        .riddle-btn.wrong {
+            border-color: #ef4444;
+            background: rgba(239,68,68,0.1);
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .riddle-result {
+            font-family: var(--font-body);
+            font-size: 1.2rem;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Interactive: Loops (Ch3) */
+        .spell-container {
+            text-align: center;
+        }
+
+        .spell-stars {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .spell-star {
+            font-size: 2.5rem;
+            opacity: 0.2;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
+        }
+
+        .spell-star.lit {
+            opacity: 1;
+            filter: drop-shadow(0 0 10px rgba(251,191,36,0.8));
+            animation: starGlow 0.5s ease;
+        }
+
+        @keyframes starGlow {
+            0% { transform: scale(0.5) rotate(-180deg); }
+            50% { transform: scale(1.3) rotate(0deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .spell-btn {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            padding: 16px 40px;
+            border: 2px solid rgba(99,102,241,0.3);
+            background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(99,102,241,0.05));
+            color: var(--text-primary);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spell-btn:hover {
+            border-color: var(--ch3-indigo);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(99,102,241,0.3);
+        }
+
+        .spell-counter {
+            font-family: var(--font-code);
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+
+        /* Interactive: Functions (Ch4) */
+        .potion-container {
+            text-align: center;
+        }
+
+        .ingredients {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .ingredient {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(245,158,11,0.2);
+            background: rgba(245,158,11,0.05);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 2rem;
+        }
+
+        .ingredient:hover {
+            transform: scale(1.15);
+            border-color: var(--ch4-amber);
+            box-shadow: 0 0 20px rgba(245,158,11,0.2);
+        }
+
+        .ingredient.selected {
+            border-color: var(--ch4-amber);
+            background: rgba(245,158,11,0.15);
+            box-shadow: 0 0 30px rgba(245,158,11,0.3);
+        }
+
+        .ingredient-name {
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .cauldron {
+            font-size: 4rem;
+            margin: 20px 0;
+            transition: all 0.5s ease;
+        }
+
+        .cauldron.brewing {
+            animation: cauldronBubble 0.5s ease infinite;
+        }
+
+        @keyframes cauldronBubble {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        .potion-result {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            min-height: 40px;
+            color: var(--ch4-amber);
+        }
+
+        .brew-btn {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            padding: 14px 36px;
+            border: 2px solid rgba(245,158,11,0.3);
+            background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(245,158,11,0.05));
+            color: var(--text-primary);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+        }
+
+        .brew-btn:hover {
+            border-color: var(--ch4-amber);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(245,158,11,0.3);
+        }
+
+        /* Interactive: Lists (Ch5) */
+        .toybox-container {
+            text-align: center;
+        }
+
+        .toybox-slots {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            min-height: 100px;
+            padding: 20px;
+            border: 2px dashed rgba(6,182,212,0.3);
+            border-radius: 20px;
+            background: rgba(6,182,212,0.05);
+            align-items: center;
+        }
+
+        .toy-slot {
+            width: 80px;
+            height: 90px;
+            border: 2px solid rgba(6,182,212,0.2);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(6,182,212,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .toy-slot .slot-index {
+            font-family: var(--font-code);
+            font-size: 0.7rem;
+            color: var(--ch5-cyan);
+            margin-bottom: 4px;
+        }
+
+        .toy-slot .toy-emoji {
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .available-toys {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .add-toy-btn {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(6,182,212,0.2);
+            background: rgba(6,182,212,0.05);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-toy-btn:hover {
+            transform: scale(1.15);
+            border-color: var(--ch5-cyan);
+            box-shadow: 0 0 20px rgba(6,182,212,0.2);
+        }
+
+        .toybox-info {
+            font-family: var(--font-code);
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        .toybox-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .toy-action-btn {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            padding: 10px 24px;
+            border: 2px solid rgba(6,182,212,0.3);
+            background: rgba(6,182,212,0.1);
+            color: var(--text-primary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toy-action-btn:hover {
+            border-color: var(--ch5-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Chapter Complete Section */
+        .chapter-complete {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 24px;
+            text-align: center;
+            position: relative;
+        }
+
+        .complete-star {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: completeStar 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 30px rgba(251,191,36,0.6));
+        }
+
+        @keyframes completeStar {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            60% { transform: scale(1.3) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .complete-title {
+            font-family: var(--font-heading);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 12px;
+            color: var(--star-gold);
+        }
+
+        .complete-message {
+            font-family: var(--font-body);
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .progress-bar-container {
+            width: 200px;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--star-gold), var(--success));
+            border-radius: 4px;
+            transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .progress-text {
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .next-chapter-btn {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            padding: 14px 40px;
+            border: 2px solid var(--star-gold);
+            background: rgba(251,191,36,0.1);
+            color: var(--star-gold);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .next-chapter-btn:hover {
+            background: rgba(251,191,36,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(251,191,36,0.2);
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        
+        /* Top Nav */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: rgba(10,10,46,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transform: translateY(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .top-nav.visible {
+            transform: translateY(0);
+        }
+
+        .home-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            padding: 8px;
+            border-radius: 12px;
+        }
+
+        .home-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-chapter-name {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .nav-progress-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--star-gold);
+            border-color: var(--star-gold);
+        }
+
+        .nav-dot.completed {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        /* Side dots */
+        .side-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .side-dots.visible {
+            display: flex;
+        }
+
+        .side-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .side-dot.active {
+            background: var(--star-gold);
+            border-color: var(--star-gold);
+            box-shadow: 0 0 10px rgba(251,191,36,0.4);
+        }
+
+        .side-dot::before {
+            content: attr(data-label);
+            position: absolute;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            white-space: nowrap;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .side-dot:hover::before {
+            opacity: 1;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(10,10,46,0.9);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .bottom-nav.visible {
+            display: flex;
+        }
+
+        .bottom-nav-item {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .bottom-nav-item:hover, .bottom-nav-item.active {
+            transform: translateY(-4px) scale(1.1);
+        }
+
+        .bottom-nav-item[data-ch="1"].active { border-color: var(--ch1-blue); background: rgba(59,130,246,0.15); }
+        .bottom-nav-item[data-ch="2"].active { border-color: var(--ch2-purple); background: rgba(139,92,246,0.15); }
+        .bottom-nav-item[data-ch="3"].active { border-color: var(--ch3-indigo); background: rgba(99,102,241,0.15); }
+        .bottom-nav-item[data-ch="4"].active { border-color: var(--ch4-amber); background: rgba(245,158,11,0.15); }
+        .bottom-nav-item[data-ch="5"].active { border-color: var(--ch5-cyan); background: rgba(6,182,212,0.15); }
+
+        /* ============================================
+           LIGHTBOX
+           ============================================ */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .lightbox.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 90vh;
+            border-radius: 16px;
+            box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .lightbox.open img {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            background: none;
+            border: none;
+            font-family: var(--font-body);
+        }
+
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+
+        /* ============================================
+           CONFETTI CANVAS
+           ============================================ */
+        #confettiCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 9990;
+            pointer-events: none;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .side-dots {
+                display: none !important;
+            }
+
+            .infographic-frame {
+                width: 95%;
+            }
+
+            .chapter-story {
+                padding: 60px 16px;
+            }
+
+            .code-scroll {
+                padding: 20px 16px;
+            }
+
+            .pouch {
+                width: 120px;
+                height: 140px;
+            }
+
+            .storybook {
+                animation: bookHoverMobile 4s ease-in-out infinite;
+            }
+
+            @keyframes bookHoverMobile {
+                0%, 100% { transform: rotateY(0deg) rotateX(0deg) translateY(0); }
+                50% { transform: rotateY(0deg) rotateX(0deg) translateY(-10px); }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .landing-title {
+                font-size: 2.2rem;
+            }
+
+            .chapter-title {
+                font-size: 1.8rem;
+            }
+
+            .bottom-nav-item {
+                width: 42px;
+                height: 42px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* ============================================
+           UTILITY ANIMATIONS
+           ============================================ */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glow-text {
+            text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+        }
+
+        /* Selection color */
+        ::selection {
+            background: rgba(251,191,36,0.3);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-book"></div>
+        <div class="loading-text">Opening your storybook...</div>
+        <div class="loading-sparkles">
+            <div class="loading-sparkle"></div>
+            <div class="loading-sparkle"></div>
+            <div class="loading-sparkle"></div>
+        </div>
+    </div>
+
+    <!-- Star Canvas Background -->
+    <canvas id="starCanvas"></canvas>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <img id="lightboxImg" src="" alt="Infographic full view">
+    </div>
+
+    <!-- Badge Notification -->
+    <div class="badge-notification" id="badgeNotification">
+        <span class="badge-emoji">🏆</span>
+        <div class="badge-title">Python Adventurer!</div>
+        <div class="badge-subtitle">You completed all 5 chapters! Amazing! ✨</div>
+    </div>
+
+    <!-- =============================================
+         LANDING PAGE
+         ============================================= -->
+    <section class="landing" id="landing">
+        <div class="magic-particles" id="landingParticles"></div>
+        
+        <h1 class="landing-title" id="landingTitle">✨ Python Adventures ✨</h1>
+        <p class="landing-subtitle" id="landingSubtitle">Learn Python Through Magical Stories</p>
+
+        <div class="storybook-container" id="storybookContainer" onclick="startAdventure()">
+            <div class="storybook" id="storybook">
+                <div class="book-spine"></div>
+                <div class="book-cover">
+                    <span class="book-emoji">📖</span>
+                    <span class="book-title-text">Python<br>Adventures</span>
+                    <div class="book-stars" id="bookStars">
+                        <span class="book-star" data-ch="1">⭐</span>
+                        <span class="book-star" data-ch="2">⭐</span>
+                        <span class="book-star" data-ch="3">⭐</span>
+                        <span class="book-star" data-ch="4">⭐</span>
+                        <span class="book-star" data-ch="5">⭐</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chapter-avatars" id="chapterAvatars">
+            <div class="avatar-circle" data-ch="1" onclick="goToChapter(1)">
+                <span class="avatar-emoji">🎒</span>
+                <span class="avatar-name">Luna</span>
+                <span class="avatar-star" data-ch="1">⭐</span>
+            </div>
+            <div class="avatar-circle" data-ch="2" onclick="goToChapter(2)">
+                <span class="avatar-emoji">🐉</span>
+                <span class="avatar-name">Dragon</span>
+                <span class="avatar-star" data-ch="2">⭐</span>
+            </div>
+            <div class="avatar-circle" data-ch="3" onclick="goToChapter(3)">
+                <span class="avatar-emoji">🧙</span>
+                <span class="avatar-name">Kai</span>
+                <span class="avatar-star" data-ch="3">⭐</span>
+            </div>
+            <div class="avatar-circle" data-ch="4" onclick="goToChapter(4)">
+                <span class="avatar-emoji">👩‍🍳</span>
+                <span class="avatar-name">Maya</span>
+                <span class="avatar-star" data-ch="4">⭐</span>
+            </div>
+            <div class="avatar-circle" data-ch="5" onclick="goToChapter(5)">
+                <span class="avatar-emoji">🧸</span>
+                <span class="avatar-name">Zara</span>
+                <span class="avatar-star" data-ch="5">⭐</span>
+            </div>
+        </div>
+
+        <button class="cta-button" id="ctaButton" onclick="startAdventure()">
+            ✨ Begin Your Adventure ✨
+        </button>
+    </section>
+
+    <!-- =============================================
+         CHAPTERS CONTAINER
+         ============================================= -->
+    <div class="chapters-container" id="chaptersContainer">
+        
+        <!-- Top Navigation -->
+        <nav class="top-nav" id="topNav">
+            <button class="home-btn" onclick="goHome()" title="Back to Home">📖</button>
+            <span class="nav-chapter-name" id="navChapterName">Chapter 1</span>
+            <div class="nav-progress-dots" id="navDots">
+                <div class="nav-dot" data-ch="1" onclick="goToChapter(1)"></div>
+                <div class="nav-dot" data-ch="2" onclick="goToChapter(2)"></div>
+                <div class="nav-dot" data-ch="3" onclick="goToChapter(3)"></div>
+                <div class="nav-dot" data-ch="4" onclick="goToChapter(4)"></div>
+                <div class="nav-dot" data-ch="5" onclick="goToChapter(5)"></div>
+            </div>
+        </nav>
+
+        <!-- Side Dots -->
+        <div class="side-dots" id="sideDots">
+            <div class="side-dot active" data-section="hero" data-label="Infographic" onclick="scrollToSection('hero')"></div>
+            <div class="side-dot" data-section="story" data-label="Story" onclick="scrollToSection('story')"></div>
+            <div class="side-dot" data-section="interactive" data-label="Try It!" onclick="scrollToSection('interactive')"></div>
+            <div class="side-dot" data-section="complete" data-label="Complete" onclick="scrollToSection('complete')"></div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav" id="bottomNav">
+            <div class="bottom-nav-item" data-ch="1" onclick="goToChapter(1)">🎒</div>
+            <div class="bottom-nav-item" data-ch="2" onclick="goToChapter(2)">🐉</div>
+            <div class="bottom-nav-item" data-ch="3" onclick="goToChapter(3)">🧙</div>
+            <div class="bottom-nav-item" data-ch="4" onclick="goToChapter(4)">👩‍🍳</div>
+            <div class="bottom-nav-item" data-ch="5" onclick="goToChapter(5)">🧸</div>
+        </nav>
+
+        <!-- ======================== CHAPTER 1: Variables ======================== -->
+        <div class="chapter" id="chapter1" data-ch="1">
+            
+            <!-- Hero -->
+            <div class="chapter-hero ch1-hero" id="ch1-hero">
+                <div class="chapter-particles" id="ch1Particles"></div>
+                <span class="chapter-label ch1-color">Chapter 1</span>
+                <h2 class="chapter-title ch1-color">The Magic Backpack</h2>
+                <div class="infographic-frame" onclick="openLightbox('images/ch1-variables.jpg')">
+                    <div class="infographic-glass ch1-glass">
+                        <img class="infographic-img" src="images/ch1-variables.jpg" alt="The Magic Backpack - Variables Infographic" loading="eager">
+                    </div>
+                </div>
+                <p class="infographic-hint">🔍 Click to view full screen</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to read the story</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <!-- Story -->
+            <div class="chapter-story" id="ch1-story">
+                <div class="story-block">
+                    <p class="story-text">
+                        Meet <strong>Luna</strong>! 🎒 She's a curious girl who just got the most amazing gift — a <strong>magic backpack</strong>! 
+                        This isn't any ordinary backpack. It has special pouches that can hold <em>anything</em>, and each pouch has a name tag.
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        In Python, these magic pouches are called <strong>variables</strong>! A variable is like a labeled pouch — 
+                        you give it a name, and you can put something inside it.
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Luna puts things in her magic backpack!</span>
+<span class="code-function">name</span> <span class="code-operator">=</span> <span class="code-string">'Luna'</span>
+<span class="code-function">age</span> <span class="code-operator">=</span> <span class="code-number">10</span>
+<span class="code-function">snack</span> <span class="code-operator">=</span> <span class="code-string">'cookies'</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Whenever Luna needs something, she just calls its name! The backpack opens the right pouch and gives her what's inside. 
+                        That's exactly how <strong>print()</strong> works in Python!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Peek inside the pouches!</span>
+<span class="code-builtin">print</span>(<span class="code-function">name</span>)    <span class="code-comment"># Shows: Luna</span>
+<span class="code-builtin">print</span>(<span class="code-function">age</span>)     <span class="code-comment"># Shows: 10</span>
+<span class="code-builtin">print</span>(<span class="code-function">snack</span>)   <span class="code-comment"># Shows: cookies</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        The coolest part? Luna can <strong>change</strong> what's in a pouch anytime! If she eats her cookies and buys new ones, 
+                        she just puts the new snack in the same pouch.
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Luna changes her snack!</span>
+<span class="code-function">snack</span> <span class="code-operator">=</span> <span class="code-string">'chocolate'</span>
+<span class="code-builtin">print</span>(<span class="code-function">snack</span>)   <span class="code-comment"># Now shows: chocolate</span></code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive -->
+            <div class="chapter-interactive" id="ch1-interactive">
+                <h3 class="interactive-title ch1-color">🎒 Try It! Open Luna's Pouches</h3>
+                <p class="interactive-subtitle">Click each pouch to see what's inside!</p>
+                <div class="pouch-container" id="pouchContainer">
+                    <div class="pouch" onclick="revealPouch(this, '🌟 Luna')" data-var="name">
+                        <span class="pouch-label">name</span>
+                        <span class="pouch-emoji">👝</span>
+                        <span class="pouch-value">'Luna'</span>
+                    </div>
+                    <div class="pouch" onclick="revealPouch(this, '🔢 10')" data-var="age">
+                        <span class="pouch-label">age</span>
+                        <span class="pouch-emoji">👝</span>
+                        <span class="pouch-value">10</span>
+                    </div>
+                    <div class="pouch" onclick="revealPouch(this, '🍪 cookies')" data-var="snack">
+                        <span class="pouch-label">snack</span>
+                        <span class="pouch-emoji">👝</span>
+                        <span class="pouch-value">'cookies'</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complete -->
+            <div class="chapter-complete" id="ch1-complete">
+                <div class="complete-star">⭐</div>
+                <h3 class="complete-title">Chapter 1 Complete!</h3>
+                <p class="complete-message">You learned about variables — Luna's magic pouches! 🎒</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 20%"></div>
+                </div>
+                <p class="progress-text">1 of 5 chapters complete</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(1)">Next: The Dragon's Riddle 🐉 →</button>
+            </div>
+        </div>
+
+        <!-- ======================== CHAPTER 2: If/Else ======================== -->
+        <div class="chapter" id="chapter2" data-ch="2">
+            
+            <div class="chapter-hero ch2-hero" id="ch2-hero">
+                <div class="chapter-particles" id="ch2Particles"></div>
+                <span class="chapter-label ch2-color">Chapter 2</span>
+                <h2 class="chapter-title ch2-color">The Dragon's Riddle</h2>
+                <div class="infographic-frame" onclick="openLightbox('images/ch2-ifelse.jpg')">
+                    <div class="infographic-glass ch2-glass">
+                        <img class="infographic-img" src="images/ch2-ifelse.jpg" alt="The Dragon's Riddle - If/Else Infographic" loading="lazy">
+                    </div>
+                </div>
+                <p class="infographic-hint">🔍 Click to view full screen</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to read the story</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <div class="chapter-story" id="ch2-story">
+                <div class="story-block">
+                    <p class="story-text">
+                        Deep inside a <strong>crystal cave</strong>, Luna meets a friendly little dragon! 🐉 
+                        The dragon guards a magical treasure chest, but there's a catch — you need the right <strong>password</strong> to open it!
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        The dragon asks: <em>"What's the password?"</em> In Python, we use <strong>if/else</strong> to check answers — 
+                        just like the dragon checking your password!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># The dragon checks the password!</span>
+<span class="code-keyword">if</span> <span class="code-function">password</span> <span class="code-operator">==</span> <span class="code-string">'friendship'</span>:
+    <span class="code-builtin">print</span>(<span class="code-string">'Welcome! 🎉'</span>)
+<span class="code-keyword">elif</span> <span class="code-function">password</span> <span class="code-operator">==</span> <span class="code-string">'magic'</span>:
+    <span class="code-builtin">print</span>(<span class="code-string">'Almost! 🤔'</span>)
+<span class="code-keyword">else</span>:
+    <span class="code-builtin">print</span>(<span class="code-string">'Try again! 🔒'</span>)</code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        See how it works? <strong>if</strong> checks the first condition. If it's true — hooray, the door opens! 
+                        <strong>elif</strong> checks another option. And <strong>else</strong> catches everything else.
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        It's like choosing a path: 🛤️ The <strong>golden gate</strong> opens with "friendship", 
+                        the <strong>crystal path</strong> appears with "magic", and the <strong>fire gate</strong> stays closed otherwise!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Another example — checking age</span>
+<span class="code-function">age</span> <span class="code-operator">=</span> <span class="code-number">10</span>
+<span class="code-keyword">if</span> <span class="code-function">age</span> <span class="code-operator">>=</span> <span class="code-number">8</span>:
+    <span class="code-builtin">print</span>(<span class="code-string">'You can ride the dragon! 🐉'</span>)
+<span class="code-keyword">else</span>:
+    <span class="code-builtin">print</span>(<span class="code-string">'Maybe next year! 💫'</span>)</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapter-interactive" id="ch2-interactive">
+                <h3 class="interactive-title ch2-color">🐉 The Dragon's Challenge</h3>
+                <p class="interactive-subtitle">What's the password to open the treasure chest?</p>
+                <div class="riddle-container" id="riddleContainer">
+                    <p class="riddle-question">🔐 The dragon asks: "What opens the golden gate?"</p>
+                    <div class="riddle-options">
+                        <button class="riddle-btn" onclick="checkRiddle(this, 'wrong')">🔮 magic</button>
+                        <button class="riddle-btn" onclick="checkRiddle(this, 'correct')">💛 friendship</button>
+                        <button class="riddle-btn" onclick="checkRiddle(this, 'wrong')">🗝️ treasure</button>
+                    </div>
+                    <div class="riddle-result" id="riddleResult"></div>
+                </div>
+            </div>
+
+            <div class="chapter-complete" id="ch2-complete">
+                <div class="complete-star">⭐</div>
+                <h3 class="complete-title">Chapter 2 Complete!</h3>
+                <p class="complete-message">You mastered if/else — the dragon's riddle! 🐉</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 40%"></div>
+                </div>
+                <p class="progress-text">2 of 5 chapters complete</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(2)">Next: The Wizard's Spell 🧙 →</button>
+            </div>
+        </div>
+
+        <!-- ======================== CHAPTER 3: Loops ======================== -->
+        <div class="chapter" id="chapter3" data-ch="3">
+            
+            <div class="chapter-hero ch3-hero" id="ch3-hero">
+                <div class="chapter-particles" id="ch3Particles"></div>
+                <span class="chapter-label ch3-color">Chapter 3</span>
+                <h2 class="chapter-title ch3-color">The Wizard's Spell</h2>
+                <div class="infographic-frame" onclick="openLightbox('images/ch3-loops.jpg')">
+                    <div class="infographic-glass ch3-glass">
+                        <img class="infographic-img" src="images/ch3-loops.jpg" alt="The Wizard's Spell - Loops Infographic" loading="lazy">
+                    </div>
+                </div>
+                <p class="infographic-hint">🔍 Click to view full screen</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to read the story</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <div class="chapter-story" id="ch3-story">
+                <div class="story-block">
+                    <p class="story-text">
+                        Luna climbs the tallest tower and meets <strong>Kai the Wizard</strong>! 🧙 
+                        Kai is casting a spell that lights up stars in the sky, one by one. But he doesn't cast 5 separate spells — 
+                        he uses a <strong>loop</strong>!
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        A <strong>for loop</strong> repeats something a set number of times. It's like saying "do this 5 times!"
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Kai lights up 5 stars! ⭐</span>
+<span class="code-keyword">for</span> <span class="code-function">star</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-number">5</span>):
+    <span class="code-builtin">print</span>(<span class="code-string">f'Star {star} is glowing! ⭐'</span>)</code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        There's also a <strong>while loop</strong> — it keeps going as long as something is true. 
+                        Like a wizard fighting dragons until there are none left!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Fight dragons until they're all gone!</span>
+<span class="code-function">dragons_left</span> <span class="code-operator">=</span> <span class="code-number">3</span>
+<span class="code-keyword">while</span> <span class="code-function">dragons_left</span> <span class="code-operator">></span> <span class="code-number">0</span>:
+    <span class="code-builtin">print</span>(<span class="code-string">f'Fighting! {dragons_left} left 🐉'</span>)
+    <span class="code-function">dragons_left</span> <span class="code-operator">-=</span> <span class="code-number">1</span>
+<span class="code-builtin">print</span>(<span class="code-string">'Victory! 🎉'</span>)</code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Kai also knows two magic words: <strong>break</strong> stops the spell instantly, 
+                        and <strong>continue</strong> skips to the next round. Powerful stuff! 🌟
+                    </p>
+                </div>
+            </div>
+
+            <div class="chapter-interactive" id="ch3-interactive">
+                <h3 class="interactive-title ch3-color">🧙 Cast the Spell!</h3>
+                <p class="interactive-subtitle">Click to light up each star — just like a for loop!</p>
+                <div class="spell-container" id="spellContainer">
+                    <div class="spell-stars" id="spellStars">
+                        <span class="spell-star" data-i="0">⭐</span>
+                        <span class="spell-star" data-i="1">⭐</span>
+                        <span class="spell-star" data-i="2">⭐</span>
+                        <span class="spell-star" data-i="3">⭐</span>
+                        <span class="spell-star" data-i="4">⭐</span>
+                    </div>
+                    <button class="spell-btn" onclick="castSpell()">🪄 Cast Spell!</button>
+                    <div class="spell-counter" id="spellCounter">for star in range(5): ✨</div>
+                </div>
+            </div>
+
+            <div class="chapter-complete" id="ch3-complete">
+                <div class="complete-star">⭐</div>
+                <h3 class="complete-title">Chapter 3 Complete!</h3>
+                <p class="complete-message">You learned loops — Kai's magical spell! 🧙</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 60%"></div>
+                </div>
+                <p class="progress-text">3 of 5 chapters complete</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(3)">Next: The Recipe Book 👩‍🍳 →</button>
+            </div>
+        </div>
+
+        <!-- ======================== CHAPTER 4: Functions ======================== -->
+        <div class="chapter" id="chapter4" data-ch="4">
+            
+            <div class="chapter-hero ch4-hero" id="ch4-hero">
+                <div class="chapter-particles" id="ch4Particles"></div>
+                <span class="chapter-label ch4-color">Chapter 4</span>
+                <h2 class="chapter-title ch4-color">The Magical Recipe Book</h2>
+                <div class="infographic-frame" onclick="openLightbox('images/ch4-functions.jpg')">
+                    <div class="infographic-glass ch4-glass">
+                        <img class="infographic-img" src="images/ch4-functions.jpg" alt="The Magical Recipe Book - Functions Infographic" loading="lazy">
+                    </div>
+                </div>
+                <p class="infographic-hint">🔍 Click to view full screen</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to read the story</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <div class="chapter-story" id="ch4-story">
+                <div class="story-block">
+                    <p class="story-text">
+                        Luna enters a cozy kitchen and meets <strong>Chef Maya</strong>! 👩‍🍳 
+                        Maya has a magical recipe book — each recipe is a set of steps she can use anytime. 
+                        In Python, a recipe is called a <strong>function</strong>!
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        You create a function with <strong>def</strong> (short for "define"). 
+                        Give it a name, add ingredients (called <strong>parameters</strong>), and write the steps inside!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Maya's potion recipe!</span>
+<span class="code-keyword">def</span> <span class="code-function">make_potion</span>(<span class="code-function">ingredient</span>):
+    <span class="code-builtin">print</span>(<span class="code-string">f'Mixing {ingredient}...'</span>)
+    <span class="code-builtin">print</span>(<span class="code-string">'Adding sparkle! ✨'</span>)
+    <span class="code-keyword">return</span> <span class="code-string">'magical potion'</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Now Maya can use this recipe anytime by <strong>calling</strong> it! She just says the recipe name 
+                        and gives it an ingredient:
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Call the function (use the recipe!)</span>
+<span class="code-function">result</span> <span class="code-operator">=</span> <span class="code-function">make_potion</span>(<span class="code-string">'starlight'</span>)
+<span class="code-builtin">print</span>(<span class="code-function">result</span>)  <span class="code-comment"># magical potion</span>
+
+<span class="code-comment"># Another function!</span>
+<span class="code-keyword">def</span> <span class="code-function">greet</span>(<span class="code-function">name</span>):
+    <span class="code-keyword">return</span> <span class="code-string">'Hello '</span> <span class="code-operator">+</span> <span class="code-function">name</span>
+
+<span class="code-builtin">print</span>(<span class="code-function">greet</span>(<span class="code-string">'Maya'</span>))  <span class="code-comment"># Hello Maya</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Functions are super powerful! Write the recipe once, use it a million times. 
+                        That's the magic of <strong>code reuse</strong>! ✨
+                    </p>
+                </div>
+            </div>
+
+            <div class="chapter-interactive" id="ch4-interactive">
+                <h3 class="interactive-title ch4-color">👩‍🍳 Brew a Potion!</h3>
+                <p class="interactive-subtitle">Pick an ingredient, then brew your magical potion!</p>
+                <div class="potion-container" id="potionContainer">
+                    <div class="ingredients">
+                        <div class="ingredient" onclick="selectIngredient(this, 'starlight')" data-ing="starlight">
+                            <span>⭐</span>
+                            <span class="ingredient-name">starlight</span>
+                        </div>
+                        <div class="ingredient" onclick="selectIngredient(this, 'moonbeam')" data-ing="moonbeam">
+                            <span>🌙</span>
+                            <span class="ingredient-name">moonbeam</span>
+                        </div>
+                        <div class="ingredient" onclick="selectIngredient(this, 'rainbow')" data-ing="rainbow">
+                            <span>🌈</span>
+                            <span class="ingredient-name">rainbow</span>
+                        </div>
+                        <div class="ingredient" onclick="selectIngredient(this, 'crystal')" data-ing="crystal">
+                            <span>💎</span>
+                            <span class="ingredient-name">crystal</span>
+                        </div>
+                    </div>
+                    <div class="cauldron" id="cauldron">🧪</div>
+                    <button class="brew-btn" onclick="brewPotion()">🔥 Brew Potion!</button>
+                    <div class="potion-result" id="potionResult"></div>
+                </div>
+            </div>
+
+            <div class="chapter-complete" id="ch4-complete">
+                <div class="complete-star">⭐</div>
+                <h3 class="complete-title">Chapter 4 Complete!</h3>
+                <p class="complete-message">You mastered functions — Maya's recipe book! 👩‍🍳</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 80%"></div>
+                </div>
+                <p class="progress-text">4 of 5 chapters complete</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(4)">Next: The Toy Box 🧸 →</button>
+            </div>
+        </div>
+
+        <!-- ======================== CHAPTER 5: Lists ======================== -->
+        <div class="chapter" id="chapter5" data-ch="5">
+            
+            <div class="chapter-hero ch5-hero" id="ch5-hero">
+                <div class="chapter-particles" id="ch5Particles"></div>
+                <span class="chapter-label ch5-color">Chapter 5</span>
+                <h2 class="chapter-title ch5-color">The Magical Toy Box</h2>
+                <div class="infographic-frame" onclick="openLightbox('images/ch5-lists.jpg')">
+                    <div class="infographic-glass ch5-glass">
+                        <img class="infographic-img" src="images/ch5-lists.jpg" alt="The Magical Toy Box - Lists Infographic" loading="lazy">
+                    </div>
+                </div>
+                <p class="infographic-hint">🔍 Click to view full screen</p>
+                <div class="scroll-indicator">
+                    <span>Scroll to read the story</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <div class="chapter-story" id="ch5-story">
+                <div class="story-block">
+                    <p class="story-text">
+                        In a cozy bedroom, Luna meets <strong>Zara</strong> and her magical toy box! 🧸 
+                        This isn't just any box — it has <strong>numbered slots</strong> where each toy has its own spot. 
+                        In Python, this is called a <strong>list</strong>!
+                    </p>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        A list holds items in order, and each item has a number (starting from 0!). 
+                        You can add toys, remove them, or grab any toy by its number!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Zara's toy box (a Python list!)</span>
+<span class="code-function">toys</span> <span class="code-operator">=</span> [<span class="code-string">'teddy'</span>, <span class="code-string">'robot'</span>, <span class="code-string">'dragon'</span>, <span class="code-string">'puzzle'</span>]
+
+<span class="code-builtin">print</span>(<span class="code-function">toys</span>[<span class="code-number">0</span>])   <span class="code-comment"># teddy (first!)</span>
+<span class="code-builtin">print</span>(<span class="code-function">toys</span>[<span class="code-number">2</span>])   <span class="code-comment"># dragon</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        Zara can <strong>add</strong> new toys with <strong>append()</strong>, 
+                        <strong>remove</strong> toys with <strong>remove()</strong>, 
+                        and check how many she has with <strong>len()</strong>!
+                    </p>
+                    <div class="code-scroll">
+                        <code><span class="code-comment"># Add a unicorn toy!</span>
+<span class="code-function">toys</span>.<span class="code-builtin">append</span>(<span class="code-string">'unicorn'</span>)
+<span class="code-builtin">print</span>(<span class="code-builtin">len</span>(<span class="code-function">toys</span>))  <span class="code-comment"># 5 toys now!</span>
+
+<span class="code-comment"># Remove the robot</span>
+<span class="code-function">toys</span>.<span class="code-builtin">remove</span>(<span class="code-string">'robot'</span>)
+<span class="code-builtin">print</span>(<span class="code-function">toys</span>)  <span class="code-comment"># ['teddy', 'dragon', 'puzzle', 'unicorn']</span></code>
+                    </div>
+                </div>
+
+                <div class="story-block">
+                    <p class="story-text">
+                        You can even grab a <strong>slice</strong> of toys! <code>toys[1:3]</code> gives you toys at positions 1 and 2. 
+                        Lists are one of the most useful things in Python! 🎁
+                    </p>
+                </div>
+            </div>
+
+            <div class="chapter-interactive" id="ch5-interactive">
+                <h3 class="interactive-title ch5-color">🧸 Fill the Toy Box!</h3>
+                <p class="interactive-subtitle">Click toys to add them to Zara's toy box!</p>
+                <div class="toybox-container" id="toyboxContainer">
+                    <div class="available-toys" id="availableToys">
+                        <button class="add-toy-btn" onclick="addToy(this, '🧸', 'teddy')">🧸</button>
+                        <button class="add-toy-btn" onclick="addToy(this, '🤖', 'robot')">🤖</button>
+                        <button class="add-toy-btn" onclick="addToy(this, '🐉', 'dragon')">🐉</button>
+                        <button class="add-toy-btn" onclick="addToy(this, '🧩', 'puzzle')">🧩</button>
+                        <button class="add-toy-btn" onclick="addToy(this, '🦄', 'unicorn')">🦄</button>
+                        <button class="add-toy-btn" onclick="addToy(this, '🚀', 'rocket')">🚀</button>
+                    </div>
+                    <div class="toybox-slots" id="toyboxSlots">
+                        <span style="color: var(--text-muted); font-family: var(--font-body);">toys = [ ] — Click toys above to fill the box!</span>
+                    </div>
+                    <div class="toybox-info" id="toyboxInfo">len(toys) = 0</div>
+                    <div class="toybox-actions">
+                        <button class="toy-action-btn" onclick="removeLast()">Remove Last 🗑️</button>
+                        <button class="toy-action-btn" onclick="clearToys()">Clear All 🧹</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapter-complete" id="ch5-complete">
+                <div class="complete-star">⭐</div>
+                <h3 class="complete-title">🎉 All Chapters Complete! 🎉</h3>
+                <p class="complete-message">You learned lists — Zara's magical toy box! And you completed the entire adventure! 🧸</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 100%"></div>
+                </div>
+                <p class="progress-text">5 of 5 chapters complete — You're a Python Adventurer! 🏆</p>
+                <button class="next-chapter-btn" onclick="completeAndNext(5)">🏠 Back to Home ✨</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- =============================================
+         JAVASCRIPT
+         ============================================= -->
+    <script>
+    // ============================================
+    // STATE
+    // ============================================
+    let currentChapter = 1;
+    let progress = JSON.parse(localStorage.getItem('pythonAdventuresProgress') || '{}');
+    let spellIndex = 0;
+    let selectedIngredient = null;
+    let toyList = [];
+    let isInChapters = false;
+
+    const chapterNames = {
+        1: 'The Magic Backpack',
+        2: "The Dragon's Riddle",
+        3: "The Wizard's Spell",
+        4: 'The Recipe Book',
+        5: 'The Magical Toy Box'
+    };
+
+    const chapterEmojis = ['🎒', '🐉', '🧙', '👩‍🍳', '🧸'];
+    const chapterParticleEmojis = {
+        1: ['⭐', '✨', '🌟', '💫'],
+        2: ['💎', '🔮', '✨', '💜'],
+        3: ['⭐', '🌙', '✨', '💫'],
+        4: ['🫧', '✨', '🔥', '💛'],
+        5: ['⭐', '💙', '🌙', '✨']
+    };
+
+    // ============================================
+    // STARRY SKY CANVAS
+    // ============================================
+    const starCanvas = document.getElementById('starCanvas');
+    const starCtx = starCanvas.getContext('2d');
+    let stars = [];
+    let fireflies = [];
+    let animFrameId;
+
+    function initStarCanvas() {
+        resizeCanvas();
+        createStars();
+        createFireflies();
+        animateStars();
+    }
+
+    function resizeCanvas() {
+        starCanvas.width = window.innerWidth;
+        starCanvas.height = window.innerHeight;
+    }
+
+    function createStars() {
+        stars = [];
+        const count = Math.floor((window.innerWidth * window.innerHeight) / 3000);
+        for (let i = 0; i < count; i++) {
+            stars.push({
+                x: Math.random() * starCanvas.width,
+                y: Math.random() * starCanvas.height,
+                radius: Math.random() * 1.5 + 0.3,
+                alpha: Math.random() * 0.8 + 0.2,
+                speed: Math.random() * 0.005 + 0.002,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    function createFireflies() {
+        fireflies = [];
+        for (let i = 0; i < 15; i++) {
+            fireflies.push({
+                x: Math.random() * starCanvas.width,
+                y: Math.random() * starCanvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                radius: Math.random() * 2 + 1,
+                alpha: 0,
+                targetAlpha: Math.random() * 0.6 + 0.2,
+                hue: Math.random() > 0.5 ? 45 : 200
+            });
+        }
+    }
+
+    function animateStars() {
+        starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+
+        // Stars
+        stars.forEach(star => {
+            star.phase += star.speed;
+            const twinkle = Math.sin(star.phase) * 0.3 + 0.7;
+            starCtx.beginPath();
+            starCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            starCtx.fillStyle = `rgba(255, 255, 255, ${star.alpha * twinkle})`;
+            starCtx.fill();
+        });
+
+        // Fireflies
+        fireflies.forEach(ff => {
+            ff.x += ff.vx;
+            ff.y += ff.vy;
+            ff.alpha += (ff.targetAlpha - ff.alpha) * 0.02;
+
+            if (Math.random() < 0.01) ff.targetAlpha = Math.random() * 0.6 + 0.1;
+            if (Math.random() < 0.02) {
+                ff.vx = (Math.random() - 0.5) * 0.5;
+                ff.vy = (Math.random() - 0.5) * 0.5;
+            }
+
+            if (ff.x < 0) ff.x = starCanvas.width;
+            if (ff.x > starCanvas.width) ff.x = 0;
+            if (ff.y < 0) ff.y = starCanvas.height;
+            if (ff.y > starCanvas.height) ff.y = 0;
+
+            const gradient = starCtx.createRadialGradient(ff.x, ff.y, 0, ff.x, ff.y, ff.radius * 6);
+            gradient.addColorStop(0, `hsla(${ff.hue}, 100%, 70%, ${ff.alpha})`);
+            gradient.addColorStop(1, `hsla(${ff.hue}, 100%, 70%, 0)`);
+            starCtx.beginPath();
+            starCtx.arc(ff.x, ff.y, ff.radius * 6, 0, Math.PI * 2);
+            starCtx.fillStyle = gradient;
+            starCtx.fill();
+
+            starCtx.beginPath();
+            starCtx.arc(ff.x, ff.y, ff.radius, 0, Math.PI * 2);
+            starCtx.fillStyle = `hsla(${ff.hue}, 100%, 85%, ${ff.alpha})`;
+            starCtx.fill();
+        });
+
+        animFrameId = requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        createStars();
+    });
+
+    // ============================================
+    // LANDING PARTICLES
+    // ============================================
+    function createLandingParticles() {
+        const container = document.getElementById('landingParticles');
+        const emojis = ['⭐', '✨', '🌟', '💫', '🌙'];
+        for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            p.style.left = Math.random() * 100 + '%';
+            p.style.fontSize = (Math.random() * 16 + 8) + 'px';
+            p.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            p.style.animationDelay = (Math.random() * 10) + 's';
+            container.appendChild(p);
+        }
+    }
+
+    // ============================================
+    // CHAPTER PARTICLES
+    // ============================================
+    function createChapterParticles(chNum) {
+        const container = document.getElementById(`ch${chNum}Particles`);
+        if (!container) return;
+        container.innerHTML = '';
+        const emojis = chapterParticleEmojis[chNum];
+        for (let i = 0; i < 15; i++) {
+            const p = document.createElement('div');
+            p.className = 'ch-particle';
+            p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = (Math.random() * 100 + 100) + '%';
+            p.style.fontSize = (Math.random() * 14 + 8) + 'px';
+            p.style.animationDuration = (Math.random() * 12 + 10) + 's';
+            p.style.animationDelay = (Math.random() * 8) + 's';
+            container.appendChild(p);
+        }
+    }
+
+    // ============================================
+    // PROGRESS MANAGEMENT
+    // ============================================
+    function saveProgress() {
+        localStorage.setItem('pythonAdventuresProgress', JSON.stringify(progress));
+    }
+
+    function markComplete(ch) {
+        progress[ch] = true;
+        saveProgress();
+        updateProgressUI();
+    }
+
+    function updateProgressUI() {
+        // Book stars
+        for (let i = 1; i <= 5; i++) {
+            const star = document.querySelector(`.book-star[data-ch="${i}"]`);
+            const avatarStar = document.querySelector(`.avatar-star[data-ch="${i}"]`);
+            if (progress[i]) {
+                star?.classList.add('earned');
+                avatarStar?.classList.add('earned');
+            }
+        }
+
+        // Nav dots
+        document.querySelectorAll('.nav-dot').forEach(dot => {
+            const ch = dot.dataset.ch;
+            if (progress[ch]) dot.classList.add('completed');
+            dot.classList.toggle('active', parseInt(ch) === currentChapter);
+        });
+
+        // Bottom nav
+        document.querySelectorAll('.bottom-nav-item').forEach(item => {
+            item.classList.toggle('active', parseInt(item.dataset.ch) === currentChapter);
+        });
+    }
+
+    // ============================================
+    // NAVIGATION
+    // ============================================
+    function startAdventure() {
+        const firstIncomplete = [1,2,3,4,5].find(ch => !progress[ch]) || 1;
+        goToChapter(firstIncomplete);
+    }
+
+    function goToChapter(ch) {
+        currentChapter = ch;
+        isInChapters = true;
+
+        // Hide landing, show chapters
+        document.getElementById('landing').style.display = 'none';
+        const container = document.getElementById('chaptersContainer');
+        container.classList.add('active');
+
+        // Show correct chapter
+        document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
+        document.getElementById(`chapter${ch}`).classList.add('active');
+
+        // Show nav
+        document.getElementById('topNav').classList.add('visible');
+        document.getElementById('sideDots').classList.add('visible');
+        document.getElementById('bottomNav').classList.add('visible');
+
+        // Update nav
+        document.getElementById('navChapterName').textContent = `Ch ${ch}: ${chapterNames[ch]}`;
+        updateProgressUI();
+
+        // Create particles
+        createChapterParticles(ch);
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'instant' });
+
+        // Animate entry
+        animateChapterEntry(ch);
+
+        // Setup scroll observers
+        setupScrollObservers(ch);
+    }
+
+    function goHome() {
+        isInChapters = false;
+        document.getElementById('chaptersContainer').classList.remove('active');
+        document.getElementById('topNav').classList.remove('visible');
+        document.getElementById('sideDots').classList.remove('visible');
+        document.getElementById('bottomNav').classList.remove('visible');
+        document.getElementById('landing').style.display = 'flex';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        updateProgressUI();
+
+        // Check if all complete
+        const allComplete = [1,2,3,4,5].every(ch => progress[ch]);
+        if (allComplete) {
+            setTimeout(showBadge, 800);
+        }
+    }
+
+    function completeAndNext(ch) {
+        markComplete(ch);
+        launchConfetti();
+
+        if (ch < 5) {
+            setTimeout(() => goToChapter(ch + 1), 1200);
+        } else {
+            markComplete(5);
+            setTimeout(() => {
+                goHome();
+            }, 1500);
+        }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!isInChapters) return;
+        if (e.key === 'ArrowRight' && currentChapter < 5) {
+            goToChapter(currentChapter + 1);
+        } else if (e.key === 'ArrowLeft' && currentChapter > 1) {
+            goToChapter(currentChapter - 1);
+        } else if (e.key === 'Escape') {
+            goHome();
+        }
+    });
+
+    // Touch swipe
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+        if (!isInChapters) return;
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 80) {
+            if (diff > 0 && currentChapter < 5) goToChapter(currentChapter + 1);
+            if (diff < 0 && currentChapter > 1) goToChapter(currentChapter - 1);
+        }
+    }, { passive: true });
+
+    // ============================================
+    // CHAPTER ANIMATIONS
+    // ============================================
+    function animateChapterEntry(ch) {
+        const hero = document.getElementById(`ch${ch}-hero`);
+        const label = hero.querySelector('.chapter-label');
+        const title = hero.querySelector('.chapter-title');
+        const frame = hero.querySelector('.infographic-frame');
+        const hint = hero.querySelector('.infographic-hint');
+
+        gsap.set([label, title, frame, hint], { opacity: 0 });
+        gsap.set(frame, { scale: 0.85, filter: 'blur(10px)' });
+
+        const tl = gsap.timeline({ delay: 0.2 });
+        tl.to(label, { opacity: 0.7, y: 0, duration: 0.5, ease: 'power2.out' })
+          .to(title, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3')
+          .to(frame, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' }, '-=0.3')
+          .to(hint, { opacity: 1, duration: 0.4 }, '-=0.2');
+    }
+
+    // ============================================
+    // SCROLL OBSERVERS
+    // ============================================
+    function setupScrollObservers(ch) {
+        // Story blocks fade in
+        const storyBlocks = document.querySelectorAll(`#ch${ch}-story .story-block`);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        storyBlocks.forEach(block => {
+            block.classList.remove('visible');
+            observer.observe(block);
+        });
+
+        // Side dots update
+        const sections = ['hero', 'story', 'interactive', 'complete'];
+        const sideObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionType = entry.target.id.split('-')[1] || 'hero';
+                    document.querySelectorAll('.side-dot').forEach(d => d.classList.remove('active'));
+                    const dot = document.querySelector(`.side-dot[data-section="${sectionType}"]`);
+                    if (dot) dot.classList.add('active');
+                }
+            });
+        }, { threshold: 0.3 });
+
+        sections.forEach(sec => {
+            const el = document.getElementById(`ch${ch}-${sec}`);
+            if (el) sideObserver.observe(el);
+        });
+    }
+
+    function scrollToSection(section) {
+        const el = document.getElementById(`ch${currentChapter}-${section}`);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ============================================
+    // LIGHTBOX
+    // ============================================
+    function openLightbox(src) {
+        const lightbox = document.getElementById('lightbox');
+        document.getElementById('lightboxImg').src = src;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    // ============================================
+    // INTERACTIVE: Ch1 - Variables (Pouches)
+    // ============================================
+    function revealPouch(el, value) {
+        el.classList.add('revealed');
+        const emoji = el.querySelector('.pouch-emoji');
+        emoji.textContent = '👜';
+        gsap.fromTo(el, { scale: 0.9 }, { scale: 1, duration: 0.4, ease: 'back.out(1.7)' });
+        
+        // Check all revealed
+        const allRevealed = document.querySelectorAll('.pouch.revealed').length === 3;
+        if (allRevealed) {
+            setTimeout(() => miniCelebrate(), 500);
+        }
+    }
+
+    // ============================================
+    // INTERACTIVE: Ch2 - If/Else (Riddle)
+    // ============================================
+    function checkRiddle(btn, result) {
+        const resultEl = document.getElementById('riddleResult');
+        document.querySelectorAll('.riddle-btn').forEach(b => {
+            b.classList.remove('correct', 'wrong');
+            b.disabled = true;
+        });
+        
+        if (result === 'correct') {
+            btn.classList.add('correct');
+            resultEl.innerHTML = '🎉 <span style="color: var(--success)">The golden gate opens! Welcome!</span> 🎉';
+            setTimeout(() => miniCelebrate(), 300);
+        } else {
+            btn.classList.add('wrong');
+            resultEl.innerHTML = '🔒 <span style="color: #ef4444">Try again! The dragon shakes its head.</span>';
+            setTimeout(() => {
+                document.querySelectorAll('.riddle-btn').forEach(b => {
+                    b.classList.remove('wrong');
+                    b.disabled = false;
+                });
+                resultEl.innerHTML = '';
+            }, 1500);
+        }
+    }
+
+    // ============================================
+    // INTERACTIVE: Ch3 - Loops (Spell)
+    // ============================================
+    function castSpell() {
+        if (spellIndex >= 5) {
+            spellIndex = 0;
+            document.querySelectorAll('.spell-star').forEach(s => s.classList.remove('lit'));
+            document.getElementById('spellCounter').textContent = 'for star in range(5): ✨';
+            return;
+        }
+
+        const star = document.querySelector(`.spell-star[data-i="${spellIndex}"]`);
+        star.classList.add('lit');
+        document.getElementById('spellCounter').textContent = `star = ${spellIndex} → make_star_glow()! ⭐`;
+        spellIndex++;
+
+        if (spellIndex >= 5) {
+            document.getElementById('spellCounter').textContent = 'All 5 stars are glowing! ✨ Loop complete!';
+            setTimeout(() => miniCelebrate(), 300);
+        }
+    }
+
+    // ============================================
+    // INTERACTIVE: Ch4 - Functions (Potion)
+    // ============================================
+    function selectIngredient(el, name) {
+        document.querySelectorAll('.ingredient').forEach(i => i.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedIngredient = name;
+        gsap.fromTo(el, { scale: 0.9 }, { scale: 1, duration: 0.3, ease: 'back.out(1.7)' });
+    }
+
+    function brewPotion() {
+        if (!selectedIngredient) {
+            document.getElementById('potionResult').textContent = '☝️ Pick an ingredient first!';
+            return;
+        }
+        
+        const cauldron = document.getElementById('cauldron');
+        cauldron.classList.add('brewing');
+        document.getElementById('potionResult').textContent = `Mixing ${selectedIngredient}... ✨`;
+
+        setTimeout(() => {
+            cauldron.classList.remove('brewing');
+            const potions = {
+                'starlight': '🌟 Potion of Brilliance!',
+                'moonbeam': '🌙 Potion of Dreams!',
+                'rainbow': '🌈 Potion of Joy!',
+                'crystal': '💎 Potion of Clarity!'
+            };
+            document.getElementById('potionResult').textContent = potions[selectedIngredient] || '✨ Magical Potion!';
+            miniCelebrate();
+        }, 1200);
+    }
+
+    // ============================================
+    // INTERACTIVE: Ch5 - Lists (Toy Box)
+    // ============================================
+    function addToy(btn, emoji, name) {
+        if (toyList.length >= 6) return;
+        toyList.push({ emoji, name });
+        updateToyBox();
+        gsap.fromTo(btn, { scale: 0.8 }, { scale: 1, duration: 0.3, ease: 'back.out(1.7)' });
+    }
+
+    function removeLast() {
+        if (toyList.length === 0) return;
+        toyList.pop();
+        updateToyBox();
+    }
+
+    function clearToys() {
+        toyList = [];
+        updateToyBox();
+    }
+
+    function updateToyBox() {
+        const slots = document.getElementById('toyboxSlots');
+        const info = document.getElementById('toyboxInfo');
+
+        if (toyList.length === 0) {
+            slots.innerHTML = '<span style="color: var(--text-muted); font-family: var(--font-body);">toys = [ ] — Click toys above to fill the box!</span>';
+        } else {
+            slots.innerHTML = toyList.map((toy, i) => `
+                <div class="toy-slot">
+                    <span class="slot-index">[${i}]</span>
+                    <span class="toy-emoji">${toy.emoji}</span>
+                </div>
+            `).join('');
+
+            // Animate last added
+            const lastSlot = slots.lastElementChild;
+            if (lastSlot) {
+                gsap.fromTo(lastSlot, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.7)' });
+            }
+        }
+
+        info.textContent = `len(toys) = ${toyList.length}`;
+
+        if (toyList.length >= 4) {
+            setTimeout(() => miniCelebrate(), 300);
+        }
+    }
+
+    // ============================================
+    // CONFETTI
+    // ============================================
+    const confettiCanvas = document.getElementById('confettiCanvas');
+    const confettiCtx = confettiCanvas.getContext('2d');
+    let confettiPieces = [];
+    let confettiAnimating = false;
+
+    function resizeConfetti() {
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeConfetti);
+
+    function launchConfetti() {
+        resizeConfetti();
+        confettiPieces = [];
+        const colors = ['#fbbf24', '#f59e0b', '#3b82f6', '#8b5cf6', '#10b981', '#ef4444', '#ec4899', '#06b6d4'];
+        
+        for (let i = 0; i < 150; i++) {
+            confettiPieces.push({
+                x: Math.random() * confettiCanvas.width,
+                y: -20 - Math.random() * 100,
+                w: Math.random() * 10 + 5,
+                h: Math.random() * 6 + 3,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                vy: Math.random() * 3 + 2,
+                vx: (Math.random() - 0.5) * 3,
+                rotation: Math.random() * 360,
+                rotationSpeed: (Math.random() - 0.5) * 10,
+                alpha: 1
+            });
+        }
+
+        if (!confettiAnimating) {
+            confettiAnimating = true;
+            animateConfetti();
+        }
+    }
+
+    function miniCelebrate() {
+        resizeConfetti();
+        const colors = ['#fbbf24', '#f59e0b', '#10b981', '#8b5cf6'];
+        for (let i = 0; i < 30; i++) {
+            confettiPieces.push({
+                x: confettiCanvas.width / 2 + (Math.random() - 0.5) * 200,
+                y: confettiCanvas.height / 2,
+                w: Math.random() * 8 + 4,
+                h: Math.random() * 5 + 2,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                vy: -(Math.random() * 5 + 3),
+                vx: (Math.random() - 0.5) * 6,
+                rotation: Math.random() * 360,
+                rotationSpeed: (Math.random() - 0.5) * 15,
+                alpha: 1
+            });
+        }
+        if (!confettiAnimating) {
+            confettiAnimating = true;
+            animateConfetti();
+        }
+    }
+
+    function animateConfetti() {
+        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+        confettiPieces.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.1;
+            p.rotation += p.rotationSpeed;
+            p.alpha -= 0.005;
+
+            if (p.alpha > 0) {
+                confettiCtx.save();
+                confettiCtx.translate(p.x, p.y);
+                confettiCtx.rotate(p.rotation * Math.PI / 180);
+                confettiCtx.globalAlpha = Math.max(0, p.alpha);
+                confettiCtx.fillStyle = p.color;
+                confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                confettiCtx.restore();
+            }
+        });
+
+        confettiPieces = confettiPieces.filter(p => p.alpha > 0 && p.y < confettiCanvas.height + 50);
+
+        if (confettiPieces.length > 0) {
+            requestAnimationFrame(animateConfetti);
+        } else {
+            confettiAnimating = false;
+            confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        }
+    }
+
+    // ============================================
+    // BADGE
+    // ============================================
+    function showBadge() {
+        const badge = document.getElementById('badgeNotification');
+        badge.classList.add('show');
+        gsap.fromTo(badge, 
+            { scale: 0, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(1.7)' }
+        );
+        launchConfetti();
+        setTimeout(() => launchConfetti(), 500);
+        setTimeout(() => launchConfetti(), 1000);
+        setTimeout(() => {
+            gsap.to(badge, { scale: 0, opacity: 0, duration: 0.5, ease: 'power2.in', onComplete: () => badge.classList.remove('show') });
+        }, 4000);
+    }
+
+    // ============================================
+    // LANDING ANIMATION
+    // ============================================
+    function animateLanding() {
+        const tl = gsap.timeline();
+        
+        gsap.set(['#landingTitle', '#landingSubtitle', '#storybookContainer', '#chapterAvatars', '#ctaButton'], { opacity: 0, y: 30 });
+        
+        tl.to('#landingTitle', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' })
+          .to('#landingSubtitle', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+          .to('#storybookContainer', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.3')
+          .to('#chapterAvatars', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+          .to('#ctaButton', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3');
+    }
+
+    // ============================================
+    // INIT
+    // ============================================
+    window.addEventListener('load', () => {
+        // Hide loading screen
+        setTimeout(() => {
+            document.getElementById('loadingScreen').classList.add('hidden');
+            
+            // Init everything
+            initStarCanvas();
+            createLandingParticles();
+            updateProgressUI();
+            animateLanding();
+            resizeConfetti();
+        }, 1200);
+    });
+
+    // Prevent FOUC
+    document.documentElement.style.visibility = 'visible';
+    </script>
+</body>
+</html>
