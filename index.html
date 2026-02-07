@@ -754,97 +754,7 @@
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Audio Narration Player */
-        .story-audio-player {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            background: linear-gradient(135deg, rgba(15,15,40,0.7), rgba(25,25,60,0.8));
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 14px 22px;
-            margin-bottom: 28px;
-            backdrop-filter: blur(16px);
-            transition: all 0.3s ease;
-        }
-
-        .story-audio-player:hover {
-            border-color: rgba(255,255,255,0.2);
-            box-shadow: 0 0 30px rgba(139,92,246,0.15);
-        }
-
-        .audio-play-btn {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: none;
-            background: linear-gradient(135deg, var(--ch1-blue), #6366f1);
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(59,130,246,0.3);
-        }
-
-        .audio-play-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(59,130,246,0.5);
-        }
-
-        .audio-play-btn.playing {
-            background: linear-gradient(135deg, #ec4899, #8b5cf6);
-            animation: audioPulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes audioPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(236,72,153,0.3); }
-            50% { box-shadow: 0 0 35px rgba(236,72,153,0.6); }
-        }
-
-        .audio-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .audio-label {
-            font-family: var(--font-heading);
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .audio-label .audio-icon {
-            margin-right: 6px;
-        }
-
-        .audio-progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 4px;
-            cursor: pointer;
-        }
-
-        .audio-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--ch1-blue), #8b5cf6);
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.1s linear;
-        }
-
-        .audio-time {
-            font-family: var(--font-code);
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
+        /* (Old audio player CSS removed — replaced by Story Time narrator orb) */
 
         .story-text {
             font-family: var(--font-body);
@@ -2265,6 +2175,191 @@
             background: rgba(251,191,36,0.3);
             color: white;
         }
+
+        /* ============================================
+           STORY TIME — NARRATOR ORB
+           ============================================ */
+        .narrator-orb-wrapper {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            z-index: 998;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .narrator-orb-wrapper.visible {
+            display: flex;
+        }
+
+        .narrator-orb {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 35% 35%, rgba(59,130,246,0.35), rgba(59,130,246,0.12));
+            box-shadow: 0 0 25px rgba(59,130,246,0.25), 0 4px 20px rgba(0,0,0,0.3);
+            animation: orbFloat 3s ease-in-out infinite;
+            transition: box-shadow 0.4s ease, background 0.4s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .narrator-orb:hover {
+            box-shadow: 0 0 40px rgba(59,130,246,0.45), 0 4px 30px rgba(0,0,0,0.3);
+        }
+
+        .narrator-orb.playing {
+            animation: orbPulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 50px rgba(59,130,246,0.5), 0 0 80px rgba(59,130,246,0.15), 0 4px 30px rgba(0,0,0,0.3);
+            background: radial-gradient(circle at 35% 35%, rgba(59,130,246,0.5), rgba(99,102,241,0.2));
+        }
+
+        .narrator-orb-emoji {
+            font-size: 2rem;
+            line-height: 1;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 0 8px rgba(59,130,246,0.4));
+            pointer-events: none;
+        }
+
+        .narrator-orb canvas.orb-visualizer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px;
+            height: 90px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .narrator-orb.playing canvas.orb-visualizer {
+            opacity: 1;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes orbPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        .narrator-orb-label {
+            font-family: var(--font-heading);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-align: center;
+            white-space: nowrap;
+            transition: color 0.3s ease;
+            pointer-events: none;
+        }
+
+        .narrator-orb-wrapper.playing .narrator-orb-label {
+            color: var(--ch1-blue);
+        }
+
+        @media (max-width: 768px) {
+            .narrator-orb-wrapper {
+                bottom: 76px;
+                right: 16px;
+            }
+            .narrator-orb {
+                width: 56px;
+                height: 56px;
+            }
+            .narrator-orb-emoji {
+                font-size: 1.5rem;
+            }
+            .narrator-orb canvas.orb-visualizer {
+                width: 72px;
+                height: 72px;
+            }
+            .narrator-orb-label {
+                font-size: 0.6rem;
+            }
+        }
+
+        /* ============================================
+           STORY TIME — PROGRESS STARS TRAIL
+           ============================================ */
+        .narr-stars-trail {
+            display: none;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 0 24px;
+            flex-wrap: wrap;
+        }
+
+        .narr-stars-trail.visible {
+            display: flex;
+        }
+
+        .narr-star {
+            font-size: 1rem;
+            opacity: 0.2;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: grayscale(1);
+        }
+
+        .narr-star.lit {
+            opacity: 1;
+            filter: grayscale(0) drop-shadow(0 0 6px rgba(251,191,36,0.8));
+            animation: narrStarPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes narrStarPop {
+            0% { transform: scale(0.5); }
+            60% { transform: scale(1.4); }
+            100% { transform: scale(1); }
+        }
+
+        /* ============================================
+           STORY TIME — KARAOKE SENTENCE HIGHLIGHTING
+           ============================================ */
+        .narr-segment {
+            transition: all 0.4s ease;
+            padding: 2px 4px;
+            border-radius: 6px;
+            display: inline;
+        }
+
+        .narr-active .narr-segment.narr-seg-active {
+            background: rgba(59,130,246,0.18);
+            color: #fff;
+            text-shadow: 0 0 12px rgba(59,130,246,0.35);
+            transform: scale(1.01);
+        }
+
+        .narr-active .narr-segment.narr-seg-past {
+            opacity: 0.55;
+        }
+
+        /* Code block spotlight during narration */
+        .code-scroll.narr-spotlight {
+            border-color: rgba(59,130,246,0.5);
+            box-shadow: 0 0 30px rgba(59,130,246,0.2), 0 0 60px rgba(59,130,246,0.08);
+            animation: codeSpotlightPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes codeSpotlightPulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(59,130,246,0.2), 0 0 60px rgba(59,130,246,0.08); }
+            50% { box-shadow: 0 0 45px rgba(59,130,246,0.35), 0 0 80px rgba(59,130,246,0.12); }
+        }
     </style>
 </head>
 <body>
@@ -2297,6 +2392,15 @@
         <span class="badge-emoji">🏆</span>
         <div class="badge-title">Python Master!</div>
         <div class="badge-subtitle">You completed all 10 chapters! You're amazing! ✨🏆</div>
+    </div>
+
+    <!-- Floating Narrator Orb -->
+    <div class="narrator-orb-wrapper" id="narratorOrbWrapper">
+        <button class="narrator-orb" id="narratorOrb" aria-label="Play story narration">
+            <canvas class="orb-visualizer" id="orbVisualizer" width="90" height="90"></canvas>
+            <span class="narrator-orb-emoji">🎒</span>
+        </button>
+        <span class="narrator-orb-label" id="narratorOrbLabel">🔊 Story Time</span>
     </div>
 
     <!-- =============================================
@@ -2455,62 +2559,76 @@
 
             <!-- Story -->
             <div class="chapter-story" id="ch1-story">
-                <!-- Audio Narration -->
-                <div class="story-audio-player" id="ch1AudioPlayer">
-                    <button class="audio-play-btn" id="ch1PlayBtn" onclick="toggleAudio()">▶</button>
-                    <div class="audio-info">
-                        <div class="audio-label"><span class="audio-icon">🔊</span> Listen to the Story</div>
-                        <div class="audio-progress-bar" id="ch1ProgressBar" onclick="seekAudio(event)">
-                            <div class="audio-progress-fill" id="ch1ProgressFill"></div>
-                        </div>
-                        <div class="audio-time"><span id="ch1CurrentTime">0:00</span> / <span id="ch1Duration">1:14</span></div>
-                    </div>
-                </div>
+                <!-- Hidden audio element -->
                 <audio id="ch1Audio" src="audio/ch1-narration.mp3" preload="metadata"></audio>
 
+                <!-- Progress Stars Trail -->
+                <div class="narr-stars-trail" id="narrStarsTrail">
+                    <span class="narr-star" data-pct="10">⭐</span>
+                    <span class="narr-star" data-pct="20">⭐</span>
+                    <span class="narr-star" data-pct="30">⭐</span>
+                    <span class="narr-star" data-pct="40">⭐</span>
+                    <span class="narr-star" data-pct="50">⭐</span>
+                    <span class="narr-star" data-pct="60">⭐</span>
+                    <span class="narr-star" data-pct="70">⭐</span>
+                    <span class="narr-star" data-pct="80">⭐</span>
+                    <span class="narr-star" data-pct="90">⭐</span>
+                    <span class="narr-star" data-pct="100">⭐</span>
+                </div>
+
                 <div class="story-block">
                     <p class="story-text">
-                        Meet <strong>Luna</strong>! 🎒 She's a curious girl who just got the most amazing gift — a <strong>magic backpack</strong>! 
-                        This isn't any ordinary backpack. It has special pouches that can hold <em>anything</em>, and each pouch has a name tag.
+                        <span class="narr-segment" data-start="0" data-end="3"><strong>Chapter One: The Magic Backpack!</strong></span>
+                        <span class="narr-segment" data-start="3" data-end="10">Meet <strong>Luna</strong>! 🎒 She's a curious girl who just got the most amazing gift — a <strong>magic backpack</strong>!</span>
+                        <span class="narr-segment" data-start="10" data-end="17">This isn't any ordinary backpack. It has special pouches that can hold <em>anything</em>, and each pouch has a name tag.</span>
                     </p>
                 </div>
 
                 <div class="story-block">
                     <p class="story-text">
-                        In Python, these magic pouches are called <strong>variables</strong>! A variable is like a labeled pouch — 
-                        you give it a name, and you can put something inside it.
+                        <span class="narr-segment" data-start="17" data-end="24">In Python, these magic pouches are called <strong>variables</strong>!</span>
+                        <span class="narr-segment" data-start="24" data-end="29">A variable is like a labeled pouch — you give it a name, and you can put something inside it.</span>
                     </p>
-                    <div class="code-scroll">
+                    <div class="code-scroll" id="ch1Code1" data-narr-start="29" data-narr-end="42">
                         <code><span class="code-comment"># Luna puts things in her magic backpack!</span>
 <span class="code-function">name</span> <span class="code-operator">=</span> <span class="code-string">'Luna'</span>
 <span class="code-function">age</span> <span class="code-operator">=</span> <span class="code-number">10</span>
 <span class="code-function">snack</span> <span class="code-operator">=</span> <span class="code-string">'cookies'</span></code>
                     </div>
+                    <p class="story-text">
+                        <span class="narr-segment" data-start="29" data-end="42">Luna puts things in her magic backpack! She puts her name, <strong>Luna</strong>, in the name pouch. She puts the number <strong>10</strong> in the age pouch. And she puts <strong>cookies</strong> in the snack pouch!</span>
+                    </p>
                 </div>
 
                 <div class="story-block">
                     <p class="story-text">
-                        Whenever Luna needs something, she just calls its name! The backpack opens the right pouch and gives her what's inside. 
-                        That's exactly how <strong>print()</strong> works in Python!
+                        <span class="narr-segment" data-start="42" data-end="50">Whenever Luna needs something, she just calls its name! The backpack opens the right pouch and gives her what's inside.</span>
+                        <span class="narr-segment" data-start="50" data-end="54">That's exactly how <strong>print()</strong> works in Python!</span>
                     </p>
-                    <div class="code-scroll">
+                    <div class="code-scroll" id="ch1Code2" data-narr-start="54" data-narr-end="60">
                         <code><span class="code-comment"># Peek inside the pouches!</span>
 <span class="code-builtin">print</span>(<span class="code-function">name</span>)    <span class="code-comment"># Shows: Luna</span>
 <span class="code-builtin">print</span>(<span class="code-function">age</span>)     <span class="code-comment"># Shows: 10</span>
 <span class="code-builtin">print</span>(<span class="code-function">snack</span>)   <span class="code-comment"># Shows: cookies</span></code>
                     </div>
+                    <p class="story-text">
+                        <span class="narr-segment" data-start="54" data-end="60">Print name shows <strong>Luna</strong>. Print age shows <strong>10</strong>. Print snack shows <strong>cookies</strong>!</span>
+                    </p>
                 </div>
 
                 <div class="story-block">
                     <p class="story-text">
-                        The coolest part? Luna can <strong>change</strong> what's in a pouch anytime! If she eats her cookies and buys new ones, 
-                        she just puts the new snack in the same pouch.
+                        <span class="narr-segment" data-start="60" data-end="67">The coolest part? Luna can <strong>change</strong> what's in a pouch anytime! If she eats her cookies and buys new ones, she just puts the new snack in the same pouch.</span>
                     </p>
-                    <div class="code-scroll">
+                    <div class="code-scroll" id="ch1Code3" data-narr-start="67" data-narr-end="72">
                         <code><span class="code-comment"># Luna changes her snack!</span>
 <span class="code-function">snack</span> <span class="code-operator">=</span> <span class="code-string">'chocolate'</span>
 <span class="code-builtin">print</span>(<span class="code-function">snack</span>)   <span class="code-comment"># Now shows: chocolate</span></code>
                     </div>
+                    <p class="story-text">
+                        <span class="narr-segment" data-start="67" data-end="72">Snack equals <strong>chocolate</strong>. Now print snack shows <strong>chocolate</strong>!</span>
+                        <span class="narr-segment" data-start="72" data-end="74">Now it's your turn! Try clicking Luna's pouches to see what's inside!</span>
+                    </p>
                 </div>
             </div>
 
@@ -3741,6 +3859,9 @@
 
         // Setup scroll observers
         setupScrollObservers(ch);
+
+        // Update narrator orb visibility
+        updateNarratorOrbVisibility();
     }
 
     function goHome() {
@@ -3752,6 +3873,7 @@
         document.getElementById('landing').style.display = 'flex';
         window.scrollTo({ top: 0, behavior: 'instant' });
         updateProgressUI();
+        updateNarratorOrbVisibility();
 
         // Check if all complete
         const allChs = Array.from({length: TOTAL_CHAPTERS}, (_, i) => i + 1);
@@ -3885,58 +4007,207 @@
     });
 
     // ============================================
-    // ============================================
-    // AUDIO NARRATION PLAYER
+    // STORY TIME — IMMERSIVE NARRATOR SYSTEM
     // ============================================
     const ch1Audio = document.getElementById('ch1Audio');
-    const ch1PlayBtn = document.getElementById('ch1PlayBtn');
-    const ch1ProgressFill = document.getElementById('ch1ProgressFill');
-    const ch1CurrentTime = document.getElementById('ch1CurrentTime');
-    const ch1Duration = document.getElementById('ch1Duration');
+    const narratorOrb = document.getElementById('narratorOrb');
+    const narratorOrbWrapper = document.getElementById('narratorOrbWrapper');
+    const narratorOrbLabel = document.getElementById('narratorOrbLabel');
+    const orbVisualizerCanvas = document.getElementById('orbVisualizer');
+    const orbCtx = orbVisualizerCanvas.getContext('2d');
+    const narrStarsTrail = document.getElementById('narrStarsTrail');
+    const narrSegments = document.querySelectorAll('.narr-segment');
+    const narrStars = document.querySelectorAll('.narr-star');
+    const narrCodeBlocks = document.querySelectorAll('.code-scroll[data-narr-start]');
+    const ch1Story = document.getElementById('ch1-story');
 
-    function formatTime(s) {
-        const m = Math.floor(s / 60);
-        const sec = Math.floor(s % 60);
-        return m + ':' + (sec < 10 ? '0' : '') + sec;
+    let audioContext = null;
+    let analyser = null;
+    let audioSource = null;
+    let visualizerRAF = null;
+    let isNarrPlaying = false;
+
+    // Show/hide orb based on chapter
+    function updateNarratorOrbVisibility() {
+        const ch1 = document.getElementById('chapter1');
+        if (ch1 && ch1.classList.contains('active')) {
+            narratorOrbWrapper.classList.add('visible');
+            narrStarsTrail.classList.add('visible');
+        } else {
+            narratorOrbWrapper.classList.remove('visible');
+            narrStarsTrail.classList.remove('visible');
+            // Stop audio if leaving ch1
+            if (!ch1Audio.paused) {
+                ch1Audio.pause();
+                ch1Audio.currentTime = 0;
+                resetNarration();
+            }
+        }
     }
 
+    // Web Audio API setup (lazy, on first play)
+    function initAudioContext() {
+        if (audioContext) return;
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 64;
+            audioSource = audioContext.createMediaElementSource(ch1Audio);
+            audioSource.connect(analyser);
+            analyser.connect(audioContext.destination);
+        } catch (e) {
+            // Graceful degradation — no visualizer
+            audioContext = null;
+            analyser = null;
+        }
+    }
+
+    // Toggle play/pause from orb
     function toggleAudio() {
         if (ch1Audio.paused) {
+            initAudioContext();
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
             ch1Audio.play();
-            ch1PlayBtn.textContent = '⏸';
-            ch1PlayBtn.classList.add('playing');
+            isNarrPlaying = true;
+            narratorOrb.classList.add('playing');
+            narratorOrbWrapper.classList.add('playing');
+            narratorOrbLabel.textContent = '✨ Playing...';
+            ch1Story.classList.add('narr-active');
+            startVisualizer();
         } else {
             ch1Audio.pause();
-            ch1PlayBtn.textContent = '▶';
-            ch1PlayBtn.classList.remove('playing');
+            isNarrPlaying = false;
+            narratorOrb.classList.remove('playing');
+            narratorOrbWrapper.classList.remove('playing');
+            narratorOrbLabel.textContent = '🔊 Story Time';
+            ch1Story.classList.remove('narr-active');
+            stopVisualizer();
         }
     }
 
-    ch1Audio.addEventListener('timeupdate', () => {
-        if (ch1Audio.duration) {
-            const pct = (ch1Audio.currentTime / ch1Audio.duration) * 100;
-            ch1ProgressFill.style.width = pct + '%';
-            ch1CurrentTime.textContent = formatTime(ch1Audio.currentTime);
-        }
-    });
+    narratorOrb.addEventListener('click', toggleAudio);
 
-    ch1Audio.addEventListener('loadedmetadata', () => {
-        ch1Duration.textContent = formatTime(ch1Audio.duration);
-    });
+    // Reset all narration state
+    function resetNarration() {
+        isNarrPlaying = false;
+        narratorOrb.classList.remove('playing');
+        narratorOrbWrapper.classList.remove('playing');
+        narratorOrbLabel.textContent = '🔊 Story Time';
+        ch1Story.classList.remove('narr-active');
+        stopVisualizer();
+        narrSegments.forEach(seg => {
+            seg.classList.remove('narr-seg-active', 'narr-seg-past');
+        });
+        narrStars.forEach(s => s.classList.remove('lit'));
+        narrCodeBlocks.forEach(cb => cb.classList.remove('narr-spotlight'));
+    }
 
     ch1Audio.addEventListener('ended', () => {
-        ch1PlayBtn.textContent = '▶';
-        ch1PlayBtn.classList.remove('playing');
-        ch1ProgressFill.style.width = '0%';
-        ch1CurrentTime.textContent = '0:00';
+        resetNarration();
     });
 
-    function seekAudio(e) {
-        const bar = document.getElementById('ch1ProgressBar');
-        const rect = bar.getBoundingClientRect();
-        const pct = (e.clientX - rect.left) / rect.width;
-        ch1Audio.currentTime = pct * ch1Audio.duration;
+    // Karaoke: highlight current segment + auto-scroll
+    ch1Audio.addEventListener('timeupdate', () => {
+        const t = ch1Audio.currentTime;
+        const dur = ch1Audio.duration || 74;
+
+        // Update stars
+        const pct = (t / dur) * 100;
+        narrStars.forEach(star => {
+            const threshold = parseInt(star.dataset.pct);
+            if (pct >= threshold && !star.classList.contains('lit')) {
+                star.classList.add('lit');
+            }
+        });
+
+        // Code block spotlight
+        narrCodeBlocks.forEach(cb => {
+            const start = parseFloat(cb.dataset.narrStart);
+            const end = parseFloat(cb.dataset.narrEnd);
+            if (t >= start && t < end) {
+                cb.classList.add('narr-spotlight');
+            } else {
+                cb.classList.remove('narr-spotlight');
+            }
+        });
+
+        // Sentence highlighting + auto-scroll
+        let activeEl = null;
+        narrSegments.forEach(seg => {
+            const start = parseFloat(seg.dataset.start);
+            const end = parseFloat(seg.dataset.end);
+            if (t >= start && t < end) {
+                seg.classList.add('narr-seg-active');
+                seg.classList.remove('narr-seg-past');
+                activeEl = seg;
+            } else if (t >= end) {
+                seg.classList.remove('narr-seg-active');
+                seg.classList.add('narr-seg-past');
+            } else {
+                seg.classList.remove('narr-seg-active', 'narr-seg-past');
+            }
+        });
+
+        // Auto-scroll to active sentence
+        if (activeEl && isNarrPlaying) {
+            activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+
+    // Visualizer drawing
+    function startVisualizer() {
+        if (!analyser) return;
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        const canvas = orbVisualizerCanvas;
+        const ctx = orbCtx;
+        const dpr = window.devicePixelRatio || 1;
+        const size = 90;
+        canvas.width = size * dpr;
+        canvas.height = size * dpr;
+        ctx.scale(dpr, dpr);
+        const cx = size / 2;
+        const cy = size / 2;
+        const baseRadius = 33;
+        const barCount = bufferLength;
+
+        function draw() {
+            visualizerRAF = requestAnimationFrame(draw);
+            analyser.getByteFrequencyData(dataArray);
+            ctx.clearRect(0, 0, size, size);
+
+            for (let i = 0; i < barCount; i++) {
+                const angle = (i / barCount) * Math.PI * 2 - Math.PI / 2;
+                const val = dataArray[i] / 255;
+                const barH = val * 10 + 1;
+                const x1 = cx + Math.cos(angle) * baseRadius;
+                const y1 = cy + Math.sin(angle) * baseRadius;
+                const x2 = cx + Math.cos(angle) * (baseRadius + barH);
+                const y2 = cy + Math.sin(angle) * (baseRadius + barH);
+
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.strokeStyle = `rgba(59,130,246,${0.4 + val * 0.6})`;
+                ctx.lineWidth = 2.5;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+            }
+        }
+        draw();
     }
+
+    function stopVisualizer() {
+        if (visualizerRAF) {
+            cancelAnimationFrame(visualizerRAF);
+            visualizerRAF = null;
+        }
+        orbCtx.clearRect(0, 0, 90, 90);
+    }
+
+    // Narrator orb visibility is updated in goToChapter() and goHome()
 
     // INTERACTIVE: Ch1 - Variables (Pouches)
     // ============================================
